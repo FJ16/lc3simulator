@@ -9,7 +9,7 @@ import java.io.*;
 public class LC3Parser implements LC3ParserConstants {
   public static void main(String args[]) throws ParseException {
     LC3Parser parser = new LC3Parser();
-    File file = new File("tt.asm");
+    File file = new File("test2.asm");
     CodeBase cb;
     try {
                 cb = parser.parse(new FileInputStream(file));
@@ -32,6 +32,7 @@ public class LC3Parser implements LC3ParserConstants {
     Token t =  parser.getNextToken();
     while(t.kind!=LC3ParserConstants.END){
         //System.out.println(t.kind);
+        ReadState state = null;
         if(t.kind == LC3ParserConstants.EOF)
         {
                         throw new Exception(".END excepted at line "+t.beginLine+" column "+t.beginColumn);
@@ -41,14 +42,18 @@ public class LC3Parser implements LC3ParserConstants {
                         instruction = cb.newInstruction(t);
                 }else
                 {
-                        boolean complete = instruction.addToken(t);
-                        if(complete)
+                        state = instruction.addToken(t);
+                        if(state == ReadState.Complete||state == ReadState.Optional)
                         {
                           cb.add(instruction);
                           instruction = null;
                         }
                 }
-                t = parser.getNextToken();
+                if(state != ReadState.Optional)
+                {
+                        t = parser.getNextToken();
+                }
+
     }
     System.out.println(cb.getInstructions().size());
     return cb;
@@ -191,7 +196,7 @@ public class LC3Parser implements LC3ParserConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[35];
+    boolean[] la1tokens = new boolean[38];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -208,7 +213,7 @@ public class LC3Parser implements LC3ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 35; i++) {
+    for (int i = 0; i < 38; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

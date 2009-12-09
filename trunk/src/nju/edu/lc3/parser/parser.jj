@@ -16,7 +16,7 @@ import java.io.*;
 public class LC3Parser {
   public static void main(String args[]) throws ParseException {
     LC3Parser parser = new LC3Parser();
-    File file = new File("tt.asm");
+    File file = new File("test2.asm");
     CodeBase cb;
     try {
 		cb = parser.parse(new FileInputStream(file));
@@ -37,17 +37,20 @@ public class LC3Parser {
     Token t =  parser.getNextToken();
     while(t.kind!=LC3ParserConstants.END){
     	//System.out.println(t.kind);
+    	ReadState state = null;
     	if(t.kind == LC3ParserConstants.EOF)    	{			throw new Exception(".END excepted at line "+t.beginLine+" column "+t.beginColumn);
     	}
     	if(instruction == null)    	{			instruction = cb.newInstruction(t);
-   		}else   		{			boolean complete = instruction.addToken(t);
-   			if(complete)
+   		}else   		{			state = instruction.addToken(t);
+   			if(state == ReadState.Complete||state == ReadState.Optional)
    			{
    			  cb.add(instruction);
    			  instruction = null;
    			}
    		}
-   		t = parser.getNextToken();
+   		if(state != ReadState.Optional)   		{			t = parser.getNextToken();
+   		}
+   		
     }
     System.out.println(cb.getInstructions().size());
     return cb;  }
@@ -86,17 +89,20 @@ TOKEN :
 | < END: ".END" >
 | < FILL:".FILL" >
 | < STRINGZ:".STRINGZ" >
+| < BLKW:".BLKW" >
+| < HALT:"HALT" >
 | < COMMA:"," >
 }
 
 TOKEN :
 {	< REGISTER: "R"< NUMBER> >
 |	< #NUMBER:(["0"-"9"])+ >
-| 	< DECIMAL: "#"< NUMBER > >
+| 	< DECIMAL: "#"("-")?< NUMBER > >
 | 	< HEX: ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
 |   < OCTAL: "0" (["0"-"7"])+ >
 |   < STRING: "\""(~["\n","\r"])*"\"" >
-|   < ID :(["a"-"z","A"-"Z"])+ >}
+|   < ID :["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","0"-"9"])* >
+| 	< COUNT:["1"-"9"](["0"-"9"])* >}
 
 SKIP:
 {  < COMMENT: ";"(~["\n","\r"])* >

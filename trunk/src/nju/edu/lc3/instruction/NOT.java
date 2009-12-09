@@ -21,7 +21,7 @@ public class NOT extends Instruction{
 		
 	}
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		switch(step){
 		case 1:
 			if(token.kind != LC3ParserConstants.REGISTER){
@@ -29,22 +29,22 @@ public class NOT extends Instruction{
 			}
 			dr = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Continue;
 		case 3:
 			if(token.kind != LC3ParserConstants.REGISTER){
 				throw LC3UTIL.generateException("register expected", token.beginLine, token.beginColumn);
 			}
 			sr = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Complete;
 		case 2:
 			if(token.kind != LC3ParserConstants.COMMA){
 				throw LC3UTIL.generateException("comma expected", token.beginLine, token.beginColumn);
 			}
 			step++;
-			return false;
+			return ReadState.Continue;
 		}
-		return false;
+		return ReadState.Continue;
 	}
 
 	@Override

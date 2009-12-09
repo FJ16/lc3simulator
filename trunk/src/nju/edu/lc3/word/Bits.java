@@ -63,12 +63,7 @@ public class Bits {
 		return TO_BIT_ARRAY(value,length);
 	}
 	public static char[] TO_BIT_ARRAY(int value,int length)throws Exception{
-		//System.out.println("c:"+value);
-		int max = (int)Math.pow(2,length - 1)-1;
-		int min = -(int)Math.pow(2,length-1);
-		if(value < min || value > max){
-			throw new Exception("");
-		}
+		//System.out.println("c:"+value+" length:"+length);
 		String binary = Integer.toBinaryString(value);
 		//System.out.println(binary);
 		char[] result;

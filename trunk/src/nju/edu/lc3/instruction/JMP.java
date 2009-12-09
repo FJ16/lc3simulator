@@ -19,12 +19,12 @@ public class JMP extends Instruction{
 		
 	}
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		if(token.kind != LC3ParserConstants.REGISTER){
 			throw LC3UTIL.generateException("register expected", token.beginLine, token.beginColumn);
 		}
 		br = LC3UTIL.getRegisterId(token);
-		return true;
+		return ReadState.Complete;
 	}
 
 	@Override

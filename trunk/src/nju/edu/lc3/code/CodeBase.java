@@ -78,6 +78,8 @@ public class CodeBase {
 			case LC3ParserConstants.FILL:instruction = new FILL(token,offset);break;
 			case LC3ParserConstants.STRINGZ:instruction = new STRINGZ(token,offset);break;
 			case LC3ParserConstants.ORIG:instruction = new ORIG(token,offset);break;
+			case LC3ParserConstants.BLKW:instruction = new BLKW(token,offset);break;
+			case LC3ParserConstants.HALT:instruction = new HALT(token,offset);break;
 			}
 			if(instruction == null){
 				throw new Exception("Opcodes Excepted at line "+token.beginLine+" column "+token.beginColumn);

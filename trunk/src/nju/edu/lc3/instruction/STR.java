@@ -23,7 +23,7 @@ public class STR extends Instruction{
 	}
 
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 				switch(step){
 		case 1:
 			if(token.kind != LC3ParserConstants.REGISTER){
@@ -31,20 +31,20 @@ public class STR extends Instruction{
 			}
 			sr = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Continue;
 		case 3:
 			if(token.kind != LC3ParserConstants.REGISTER){
 				throw LC3UTIL.generateException("register expected", token.beginLine, token.beginColumn);
 			}
 			br = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Continue;
 		case 5:
 			if(token.kind == LC3ParserConstants.DECIMAL||
 					token.kind == LC3ParserConstants.OCTAL||
 					token.kind == LC3ParserConstants.HEX){
 				offset = LC3UTIL.TO_BITS(token,6);
-				return true;
+				return ReadState.Complete;
 			}else{
 				throw LC3UTIL.generateException("register or immediate value expected", token.beginLine, token.beginColumn);
 			}
@@ -54,9 +54,9 @@ public class STR extends Instruction{
 				throw LC3UTIL.generateException("comma expected", token.beginLine, token.beginColumn);
 			}
 			step++;
-			return false;
+			return ReadState.Continue;
 		}
-		return false;
+		return ReadState.Continue;
 	}
 
 

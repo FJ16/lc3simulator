@@ -22,17 +22,17 @@ public class JSR extends Instruction{
 	}
 
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		if(token.kind == LC3ParserConstants.ID){
 			label = token.image;
 			useLabel = true;
-			return true;
+			return ReadState.Complete;
 		}else if(token.kind == LC3ParserConstants.DECIMAL||
 				token.kind == LC3ParserConstants.OCTAL||
 				token.kind == LC3ParserConstants.HEX){
 			offset = LC3UTIL.TO_BITS(token,11);
 			useLabel = false;
-			return true;
+			return ReadState.Complete;
 		}else{
 			throw LC3UTIL.generateException("register or immediate value expected", token.beginLine, token.beginColumn);
 		}	

@@ -23,7 +23,7 @@ public class LEA extends Instruction{
 		
 	}
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		switch(step){
 		case 1:
 			if(token.kind != LC3ParserConstants.REGISTER){
@@ -31,18 +31,18 @@ public class LEA extends Instruction{
 			}
 			dr = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Continue;
 		case 3:
 			if(token.kind == LC3ParserConstants.ID){
 				label = token.image;
 				useLabel = true;
-				return true;
+				return ReadState.Complete;
 			}else if(token.kind == LC3ParserConstants.DECIMAL||
 					token.kind == LC3ParserConstants.OCTAL||
 					token.kind == LC3ParserConstants.HEX){
 				offset = LC3UTIL.TO_BITS(token,9);
 				useLabel = false;
-				return true;
+				return ReadState.Complete;
 			}else{
 				throw LC3UTIL.generateException("register or immediate value expected", token.beginLine, token.beginColumn);
 			}
@@ -51,9 +51,9 @@ public class LEA extends Instruction{
 				throw LC3UTIL.generateException("comma expected", token.beginLine, token.beginColumn);
 			}
 			step++;
-			return false;
+			return ReadState.Continue;
 		}
-		return false;
+		return ReadState.Continue;
 	}
 
 

@@ -18,13 +18,13 @@ public class STRINGZ extends Instruction{
 	}
 
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		if(token.kind != LC3ParserConstants.STRING){
 			throw LC3UTIL.generateException("String expected", token.beginLine, token.beginColumn);
 		}
 		int length = token.image.length();
 		str = token.image.substring(1,length-1);
-		return true;
+		return ReadState.Complete;
 	}
 
 	@Override
