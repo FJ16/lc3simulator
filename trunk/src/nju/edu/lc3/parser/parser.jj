@@ -1,0 +1,108 @@
+/**
+ * JavaCC file
+ */
+ 
+options {
+  JDK_VERSION = "1.5";
+  STATIC = false;
+}
+PARSER_BEGIN(LC3Parser)
+package nju.edu.lc3.parser;
+
+import java.util.*;
+import nju.edu.lc3.instruction.*;
+import nju.edu.lc3.code.*;
+import java.io.*;
+public class LC3Parser {
+  public static void main(String args[]) throws ParseException {
+    LC3Parser parser = new LC3Parser();
+    File file = new File("tt.asm");
+    CodeBase cb;
+    try {
+		cb = parser.parse(new FileInputStream(file));
+		cb.showBinaryInstructions();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+  }
+
+  public LC3Parser()  {
+  }
+
+  public CodeBase parse(InputStream in)throws Exception  {
+    LC3Parser parser = new LC3Parser(in);
+    CodeBase cb = CodeBase.getInstance();
+    Instruction instruction = null;
+    
+    Token t =  parser.getNextToken();
+    while(t.kind!=LC3ParserConstants.END){
+    	//System.out.println(t.kind);
+    	if(t.kind == LC3ParserConstants.EOF)    	{			throw new Exception(".END excepted at line "+t.beginLine+" column "+t.beginColumn);
+    	}
+    	if(instruction == null)    	{			instruction = cb.newInstruction(t);
+   		}else   		{			boolean complete = instruction.addToken(t);
+   			if(complete)
+   			{
+   			  cb.add(instruction);
+   			  instruction = null;
+   			}
+   		}
+   		t = parser.getNextToken();
+    }
+    System.out.println(cb.getInstructions().size());
+    return cb;  }
+}
+PARSER_END(LC3Parser)
+
+SKIP:
+{  " "
+| "\t"
+| "\r"
+| "\n"}
+
+TOKEN [IGNORE_CASE]: /* OPERATIONS */
+{	< ADD: "ADD" >
+| 	< AND: "AND" >
+| 	< JMP: "JMP" >
+| 	< JSR: "JSR" >
+|  	< JSRR: "JSRR" >
+|  	< LD: "LD" >
+|  	< LDI: "LDI" >
+|  	< LDR: "LDR">
+|  	< LEA: "LEA">
+| 	< NOT: "NOT" >
+|  	< RET: "RET">
+|  	< RTI: "RTI">
+|  	< ST : "ST">
+| 	< STI: "STI">
+|  	< STR: "STR">
+| 	< TRAP: "TRAP">
+|   < BR: "BR"("n")?("z")?("p") ? >  
+}
+
+TOKEN :
+{
+  < ORIG: ".ORIG" >
+| < END: ".END" >
+| < FILL:".FILL" >
+| < STRINGZ:".STRINGZ" >
+| < COMMA:"," >
+}
+
+TOKEN :
+{	< REGISTER: "R"< NUMBER> >
+|	< #NUMBER:(["0"-"9"])+ >
+| 	< DECIMAL: "#"< NUMBER > >
+| 	< HEX: ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|   < OCTAL: "0" (["0"-"7"])+ >
+|   < STRING: "\""(~["\n","\r"])*"\"" >
+|   < ID :(["a"-"z","A"-"Z"])+ >}
+
+SKIP:
+{  < COMMENT: ";"(~["\n","\r"])* >
+}
+
+/*
+TOKEN:
+{  < NEWLINE: "\r"|"\n"|"\r\n" >
+}*/
