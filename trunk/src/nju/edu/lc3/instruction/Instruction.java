@@ -14,10 +14,10 @@ public abstract class Instruction {
 	final int LABEL_TYPE = 0x0004;
 	*/
 	
-	final int opType;
-	Token opcode;
-	int wordLength = 0;
-	int baseOffset = 0;
+	protected final int opType;
+	protected Token opcode;
+	protected int wordLength = 0;
+	protected int baseOffset = 0;
 	ArrayList<Token> list;
 	public Instruction(int opType,Token opcode,int offset){
 		this.opType = opType;
