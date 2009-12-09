@@ -62,7 +62,7 @@ public class ADD extends Instruction{
 		return result;
 	}
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		switch(step){
 		case 1:
 			if(token.kind != LC3ParserConstants.REGISTER){
@@ -70,31 +70,31 @@ public class ADD extends Instruction{
 			}
 			dr = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Continue;
 		case 3:
 			if(token.kind != LC3ParserConstants.REGISTER){
 				throw LC3UTIL.generateException("register expected", token.beginLine, token.beginColumn);
 			}
 			sr1 = LC3UTIL.getRegisterId(token);
 			step++;
-			return false;
+			return ReadState.Continue;
 		case 5:
 			if(token.kind == LC3ParserConstants.REGISTER){
 				sr2 = LC3UTIL.getRegisterId(token);
 				register = true;
-				return true;
+				return ReadState.Complete;
 			}else if(token.kind == LC3ParserConstants.ID){
 				label = token.image;
 				register = false;
 				useLabel = true;
-				return true;
+				return ReadState.Complete;
 			}else if(token.kind == LC3ParserConstants.DECIMAL||
 					token.kind == LC3ParserConstants.OCTAL||
 					token.kind == LC3ParserConstants.HEX){
 				offset = LC3UTIL.TO_BITS(token,5);
 				register = false;
 				useLabel = false;
-				return true;
+				return ReadState.Complete;
 			}else{
 				throw LC3UTIL.generateException("register or immediate value expected", token.beginLine, token.beginColumn);
 			}
@@ -104,8 +104,8 @@ public class ADD extends Instruction{
 				throw LC3UTIL.generateException("comma expected", token.beginLine, token.beginColumn);
 			}
 			step++;
-			return false;
+			return ReadState.Continue;
 		}
-		return true;
+		return ReadState.Complete;
 	}
 }

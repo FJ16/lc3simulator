@@ -18,9 +18,9 @@ public class RET extends Instruction{
 	}
 
 	@Override
-	public boolean addToken(Token token) throws Exception {
+	public ReadState addToken(Token token) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		return ReadState.Optional;
 	}
 	@Override
 	public Word[] toWord(CodeBase cb) throws Exception{

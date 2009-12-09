@@ -54,23 +54,29 @@ public interface LC3ParserConstants {
   /** RegularExpression Id. */
   int STRINGZ = 25;
   /** RegularExpression Id. */
-  int COMMA = 26;
+  int BLKW = 26;
   /** RegularExpression Id. */
-  int REGISTER = 27;
+  int HALT = 27;
   /** RegularExpression Id. */
-  int NUMBER = 28;
+  int COMMA = 28;
   /** RegularExpression Id. */
-  int DECIMAL = 29;
+  int REGISTER = 29;
   /** RegularExpression Id. */
-  int HEX = 30;
+  int NUMBER = 30;
   /** RegularExpression Id. */
-  int OCTAL = 31;
+  int DECIMAL = 31;
   /** RegularExpression Id. */
-  int STRING = 32;
+  int HEX = 32;
   /** RegularExpression Id. */
-  int ID = 33;
+  int OCTAL = 33;
   /** RegularExpression Id. */
-  int COMMENT = 34;
+  int STRING = 34;
+  /** RegularExpression Id. */
+  int ID = 35;
+  /** RegularExpression Id. */
+  int COUNT = 36;
+  /** RegularExpression Id. */
+  int COMMENT = 37;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -103,6 +109,8 @@ public interface LC3ParserConstants {
     "\".END\"",
     "\".FILL\"",
     "\".STRINGZ\"",
+    "\".BLKW\"",
+    "\"HALT\"",
     "\",\"",
     "<REGISTER>",
     "<NUMBER>",
@@ -111,6 +119,7 @@ public interface LC3ParserConstants {
     "<OCTAL>",
     "<STRING>",
     "<ID>",
+    "<COUNT>",
     "<COMMENT>",
   };
 

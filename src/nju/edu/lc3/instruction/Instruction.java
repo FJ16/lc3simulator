@@ -25,7 +25,7 @@ public abstract class Instruction {
 		this.baseOffset = offset;
 		list = new ArrayList<Token>();
 	}
-	abstract public boolean addToken(Token token)throws Exception;//若指令所有参数已加载完成，则返回true，否则返回false
+	abstract public ReadState addToken(Token token)throws Exception;//若指令所有参数已加载完成，则返回true，否则返回false
 	
 	abstract public Word[] toWord(CodeBase cb)throws Exception;//生成二进制机器码
 	abstract public void parseFromWord(Word word)throws Exception;//从机器码中解析指令相关信息，比如操作数，寄存器之类
