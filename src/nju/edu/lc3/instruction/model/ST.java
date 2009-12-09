@@ -1,20 +1,22 @@
-package nju.edu.lc3.instruction;
+package nju.edu.lc3.instruction.model;
 
 import nju.edu.lc3.code.CodeBase;
+import nju.edu.lc3.instruction.Instruction;
+import nju.edu.lc3.instruction.ReadState;
 import nju.edu.lc3.parser.LC3ParserConstants;
 import nju.edu.lc3.parser.Token;
 import nju.edu.lc3.util.LC3UTIL;
 import nju.edu.lc3.word.Bits;
 import nju.edu.lc3.word.Word;
-public class STI extends Instruction{
-	char[] opcode={'1','0','1','1'};
+public class ST extends Instruction{
+	char[] opcode={'0','0','1','1'};
 	int sr;
 	char[] offset;
 	String label;
 	boolean useLabel;
 	int step = 1;
-	public STI(Token token,int offset){
-		super(LC3ParserConstants.STI,token,offset);
+	public ST(Token token,int offset){
+		super(LC3ParserConstants.ST,token,offset);
 	}
 
 	@Override

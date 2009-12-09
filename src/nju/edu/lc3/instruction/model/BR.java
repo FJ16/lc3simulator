@@ -1,18 +1,34 @@
-package nju.edu.lc3.instruction;
+package nju.edu.lc3.instruction.model;
 
 import nju.edu.lc3.code.CodeBase;
+import nju.edu.lc3.instruction.Instruction;
+import nju.edu.lc3.instruction.ReadState;
 import nju.edu.lc3.parser.LC3ParserConstants;
 import nju.edu.lc3.parser.Token;
 import nju.edu.lc3.util.LC3UTIL;
 import nju.edu.lc3.word.Bits;
 import nju.edu.lc3.word.Word;
-public class JSR extends Instruction{
-	char[] opcode={'0','1','0','0'};
-	String label;
-	boolean useLabel;
+public class BR extends Instruction{
+	char[] opcode={'0','0','0','0'};
+	boolean n = false;
+	boolean z = false;
+	boolean p = false;
 	char[] offset;
-	public JSR(Token token,int offset){
-		super(LC3ParserConstants.JSR,token,offset);
+	String label;
+	boolean useLabel = false;
+	public BR(Token token,int offset){
+		super(LC3ParserConstants.BR,token,offset);
+		// TODO Ω‚ŒˆN,Z,P
+		String str = token.image;
+		if(str.indexOf('n')!=-1){
+			n = true;
+		}
+		if(str.indexOf('z')!=-1){
+			z = true;
+		}
+		if(str.indexOf('p')!=-1){
+			p = true;
+		}
 	}
 
 	@Override
@@ -30,7 +46,7 @@ public class JSR extends Instruction{
 		}else if(token.kind == LC3ParserConstants.DECIMAL||
 				token.kind == LC3ParserConstants.OCTAL||
 				token.kind == LC3ParserConstants.HEX){
-			offset = LC3UTIL.TO_BITS(token,11);
+			offset = LC3UTIL.TO_BITS(token,9);
 			useLabel = false;
 			return ReadState.Complete;
 		}else{
@@ -39,11 +55,19 @@ public class JSR extends Instruction{
 	}
 
 	@Override
-	public Word[] toWord(CodeBase cb) throws Exception{
+	public Word[] toWord(CodeBase cb)throws Exception {
 		Word[] result = new Word[1];
 		result[0] = new Word();
 		result[0].setBits(opcode, 15, 12);
-		result[0].setBits('1', 11);
+		if(n){
+			result[0].setBits('1', 11);
+		}
+		if(z){
+			result[0].setBits('1', 10);
+		}
+		if(p){
+			result[0].setBits('1', 9);
+		}
 		if(useLabel){
 			Integer o = cb.getLabelOffset(label);
 			if(o==null){
@@ -51,13 +75,13 @@ public class JSR extends Instruction{
 			}
 			char[] labelOffset = null;
 			try{
-				labelOffset = Bits.TO_BIT_ARRAY(o.intValue()-super.baseOffset-1, 11);
+				labelOffset = Bits.TO_BIT_ARRAY(o.intValue()-super.baseOffset-1, 9);
 			}catch(Exception e){
 				throw new Exception("Label "+label +" cannot be reached at line "+super.opcode.beginLine);
 			}
-			result[0].setBits(labelOffset, 10,0);
-		}{
-			result[0].setBits(offset, 10,0);
+			result[0].setBits(labelOffset,8,0);
+		}else{
+			result[0].setBits(offset, 8,0);
 		}
 		return result;
 	}

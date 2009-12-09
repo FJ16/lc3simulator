@@ -1,20 +1,22 @@
-package nju.edu.lc3.instruction;
+package nju.edu.lc3.instruction.model;
 
 import nju.edu.lc3.code.CodeBase;
+import nju.edu.lc3.instruction.Instruction;
+import nju.edu.lc3.instruction.ReadState;
 import nju.edu.lc3.parser.LC3ParserConstants;
 import nju.edu.lc3.parser.Token;
 import nju.edu.lc3.util.LC3UTIL;
 import nju.edu.lc3.word.Bits;
 import nju.edu.lc3.word.Word;
-public class ST extends Instruction{
-	char[] opcode={'0','0','1','1'};
-	int sr;
+public class LDI extends Instruction{
+	char[] opcode={'1','0','1','0'};
+	int dr;
 	char[] offset;
 	String label;
 	boolean useLabel;
 	int step = 1;
-	public ST(Token token,int offset){
-		super(LC3ParserConstants.ST,token,offset);
+	public LDI(Token token,int offset){
+		super(LC3ParserConstants.LDI,token,offset);
 	}
 
 	@Override
@@ -30,7 +32,7 @@ public class ST extends Instruction{
 			if(token.kind != LC3ParserConstants.REGISTER){
 				throw LC3UTIL.generateException("register expected", token.beginLine, token.beginColumn);
 			}
-			sr = LC3UTIL.getRegisterId(token);
+			dr = LC3UTIL.getRegisterId(token);
 			step++;
 			return ReadState.Continue;
 		case 3:
@@ -56,14 +58,13 @@ public class ST extends Instruction{
 		}
 		return ReadState.Continue;
 	}
-
 	@Override
 	public Word[] toWord(CodeBase cb) throws Exception{
 		Word[] result = new Word[1];
 		result[0] = new Word();
 		result[0].setBits(opcode, 15, 12);
-		char[] srBits = Bits.TO_BIT_ARRAY(sr, 3);
-		result[0].setBits(srBits, 11,9);
+		char[] drBits = Bits.TO_BIT_ARRAY(dr, 3);
+		result[0].setBits(drBits, 11,9);
 		if(useLabel){
 			Integer o = cb.getLabelOffset(label);
 			if(o==null){

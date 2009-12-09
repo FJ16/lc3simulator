@@ -1,6 +1,8 @@
-package nju.edu.lc3.instruction;
+package nju.edu.lc3.instruction.model;
 
 import nju.edu.lc3.code.CodeBase;
+import nju.edu.lc3.instruction.Instruction;
+import nju.edu.lc3.instruction.ReadState;
 import nju.edu.lc3.parser.LC3ParserConstants;
 import nju.edu.lc3.parser.Token;
 import nju.edu.lc3.util.*;

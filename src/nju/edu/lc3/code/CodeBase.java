@@ -5,6 +5,28 @@ import java.util.HashMap;
 import java.util.List;
 
 import nju.edu.lc3.instruction.*;
+import nju.edu.lc3.instruction.model.ADD;
+import nju.edu.lc3.instruction.model.AND;
+import nju.edu.lc3.instruction.model.BLKW;
+import nju.edu.lc3.instruction.model.BR;
+import nju.edu.lc3.instruction.model.FILL;
+import nju.edu.lc3.instruction.model.HALT;
+import nju.edu.lc3.instruction.model.JMP;
+import nju.edu.lc3.instruction.model.JSR;
+import nju.edu.lc3.instruction.model.JSRR;
+import nju.edu.lc3.instruction.model.LD;
+import nju.edu.lc3.instruction.model.LDI;
+import nju.edu.lc3.instruction.model.LDR;
+import nju.edu.lc3.instruction.model.LEA;
+import nju.edu.lc3.instruction.model.NOT;
+import nju.edu.lc3.instruction.model.ORIG;
+import nju.edu.lc3.instruction.model.RET;
+import nju.edu.lc3.instruction.model.RTI;
+import nju.edu.lc3.instruction.model.ST;
+import nju.edu.lc3.instruction.model.STI;
+import nju.edu.lc3.instruction.model.STR;
+import nju.edu.lc3.instruction.model.STRINGZ;
+import nju.edu.lc3.instruction.model.TRAP;
 import nju.edu.lc3.parser.*;
 import nju.edu.lc3.word.Word;
 
