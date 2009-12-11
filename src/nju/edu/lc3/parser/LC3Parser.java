@@ -26,7 +26,9 @@ public class LC3Parser implements LC3ParserConstants {
   public CodeBase parse(InputStream in)throws Exception
   {
     LC3Parser parser = new LC3Parser(in);
-    CodeBase cb = CodeBase.getInstance();
+    CodeBase cb = new CodeBase();
+    
+    
     Instruction instruction = null;
 
     Token t =  parser.getNextToken();

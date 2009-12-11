@@ -100,8 +100,6 @@ public class Word {
 				value+=value(bits[i])*Math.pow(2,bits.length-1-i);
 			}
 		}
-		
-		
 		return value;
 	}
 	private static int value(char i){
