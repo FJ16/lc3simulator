@@ -38,13 +38,8 @@ public class CodeBase {
 	HashMap<String,Integer> labels = new HashMap<String,Integer>();
 	ArrayList<Instruction> instructions = new ArrayList<Instruction>();
 	
-	private CodeBase(){}
-	public static CodeBase getInstance(){
-		if(instance == null){
-			instance = new CodeBase();
-		}
-		return instance;
-	}
+	public CodeBase(){}
+	
 	public void add(Instruction ins){
 		offset += ins.getWordLength();
 		instructions.add(ins);
