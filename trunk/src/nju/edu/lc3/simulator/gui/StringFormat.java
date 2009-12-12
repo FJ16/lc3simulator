@@ -16,4 +16,8 @@ public class StringFormat {
 		this.string = string;
 	}
 	
+	public void setInstruction(String hexFormatIns)
+	{
+		
+	}
 }
