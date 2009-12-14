@@ -18,6 +18,7 @@ public class MemoryModel {
 	private int address;
 	private int value;
 	private String operation;
+	private String name;
 	
 	public static MemoryModel getMemory(int address)
 	{
@@ -40,6 +41,7 @@ public class MemoryModel {
 	}
 	public void setAddress(int address) {
 		this.address = address;
+		setName();
 	}
 	public int getValue() {
 		return value;
@@ -52,6 +54,10 @@ public class MemoryModel {
 	}
 	public void setOperation(String operation) {
 		this.operation = operation;
+	}
+	public String getName()
+	{
+		return name;
 	}
 	
 	
@@ -66,8 +72,14 @@ public class MemoryModel {
 		this.isCurrent = isCurrent;
 		this.address = address;
 		this.value = value;
+		setName();
 	}
-	
+	private void setName()
+	{
+		String temp=Integer.toHexString(address);
+		for(;temp.length()<4;temp="0"+temp);
+		this.name = temp;
+	}
 	public MemoryModel(int address)
 	{
 		this(false,false,address,0);
