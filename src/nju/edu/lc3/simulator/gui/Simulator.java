@@ -78,9 +78,9 @@ public class Simulator extends JFrame{
 	}
 	
 	public void initialize(){
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setSize(400,780);
-		this.setTitle("8086 Simulator");
+		this.setTitle("LC3 Simulator");
 		
 		Container cp=this.getContentPane();
 		cp.setLayout(null);
