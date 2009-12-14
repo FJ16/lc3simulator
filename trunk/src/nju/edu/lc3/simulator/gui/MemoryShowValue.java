@@ -2,9 +2,9 @@ package nju.edu.lc3.simulator.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -13,20 +13,31 @@ public class MemoryShowValue extends ShowValue{
 	
 	PicturesRes picRes = PicturesRes.getInstance();
 	private JLabel  state;
-	
+	int address;
 
 	private static MemoryShowValue unique;//the ip can only point to one address at one time.
-	public MemoryShowValue(String name){
-		super(name);
-		
+	
+	
+	public static MemoryShowValue getMemoryShowValue(MemoryModel memory)
+	{
+		MemoryShowValue memoryShowValue = new MemoryShowValue(memory);
+		return memoryShowValue;
+	}
+	private MemoryShowValue(MemoryModel memory){
+		super("");
+		this.address = memory.getAddress();
 		this.setLayout(null);
 		this.setBackground(Color.white);
-		//this.setBorder(BorderFactory.createLineBorder(Color.blue));
 		this.setSize(370,20);
 		this.addDescription();
 
 		state=new JLabel();
-		state.setIcon(picRes.getInit());
+		if(memory.isCurrent())
+			state.setIcon(picRes.getRun());
+		else if(memory.isBreakPoint())
+			state.setIcon(picRes.getbPoint());
+		else
+			state.setIcon(picRes.getInit());
 		
 		this.add(state);
 		state.setBounds(0, 0, 20, 20);
@@ -50,7 +61,9 @@ public class MemoryShowValue extends ShowValue{
 		
 	}
 	public void addDescription(){
-		des=new JLabel(""+name+"            0x0000                NOP");	
+		String temp=Integer.toHexString(address);
+		for(;temp.length()<4;temp="0"+temp);
+		des=new JLabel(""+temp+"            0x0005                NOP");	
 		this.add(des);
 		des.setBounds(30, 0, this.getWidth()-20, this.getHeight());
 	}
