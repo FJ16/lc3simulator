@@ -11,12 +11,10 @@ import javax.swing.JMenuItem;
 
 public class MemoryShowValue extends ShowValue{
 	
-	private Icon bPoint;//break point
-	private Icon init;
-	private Icon run;
+	PicturesRes picRes = PicturesRes.getInstance();
 	private JLabel  state;
 	
-	private static Icon pointTo;
+
 	private static MemoryShowValue unique;//the ip can only point to one address at one time.
 	public MemoryShowValue(String name){
 		super(name);
@@ -26,11 +24,9 @@ public class MemoryShowValue extends ShowValue{
 		//this.setBorder(BorderFactory.createLineBorder(Color.blue));
 		this.setSize(370,20);
 		this.addDescription();
-		bPoint=new ImageIcon("breakPoint.gif");
-		init=new ImageIcon("init.gif");
-		
+
 		state=new JLabel();
-		state.setIcon(init);
+		state.setIcon(picRes.getInit());
 		
 		this.add(state);
 		state.setBounds(0, 0, 20, 20);
@@ -59,29 +55,28 @@ public class MemoryShowValue extends ShowValue{
 		des.setBounds(30, 0, this.getWidth()-20, this.getHeight());
 	}
 	public void pointTo(){//the current ip point to this address
-		if(pointTo==null){
-			pointTo=new ImageIcon("pointto.gif");
+		if(unique==null){
 			unique=this;
 		}
-		unique.state.setIcon(init);
+		unique.state.setIcon(picRes.getInit());
 		
 		unique=this;
 		
-		state.setIcon(pointTo);
+		state.setIcon(picRes.getRun());
 	}
 	
 	public void addBreakPoint(){
 		if(unique!=null&& unique==this)
-			state.setIcon(pointTo);
+			state.setIcon(picRes.getRun());
 		else
-			state.setIcon(bPoint);
+			state.setIcon(picRes.getbPoint());
 	}
 	
 	public void removeBreakPoint(){
 		if(unique!=null&& unique==this)
-			state.setIcon(pointTo);
+			state.setIcon(picRes.getRun());
 		else
-			state.setIcon(init);
+			state.setIcon(picRes.getInit());
 	}
 	public void setBackGround(Color col){
 		des.setBackground(col);

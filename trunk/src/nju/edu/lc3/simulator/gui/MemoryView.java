@@ -24,7 +24,7 @@ public class MemoryView extends JPanel implements Scrollable{
 		for(int i=0;i<memory.length;i++){
 			String name=Integer.toHexString(i+address);
 			for(;name.length()<4;name="0"+name);
-			memory[i]=new MemoryShowValue("0000:"+name);			
+			memory[i]=new MemoryShowValue("x"+name);			
 			this.add(memory[i]);
 			memory[i].setBounds(0, memory[i].getHeight()*i, memory[i].getWidth(), memory[i].getHeight());
 		}

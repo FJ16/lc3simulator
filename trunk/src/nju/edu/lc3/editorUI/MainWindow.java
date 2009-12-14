@@ -1,23 +1,19 @@
 package nju.edu.lc3.editorUI;
 
-import java.io.File;
-import java.io.FileInputStream;
-
-import nju.edu.lc3.code.CodeBase;
-import nju.edu.lc3.parser.LC3Parser;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -25,8 +21,8 @@ import org.eclipse.swt.widgets.ToolItem;
 
 public class MainWindow {
 	
-	private List list;
 	private Text text;
+	private Table table;
 	protected Shell shell;
 
 	/**
@@ -82,24 +78,9 @@ public class MainWindow {
 		final ToolItem newItemToolItem_2 = new ToolItem(toolBar, SWT.PUSH);
 		newItemToolItem_2.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
-				list.removeAll();
-				
-				
-				//item.setText("µ⁄“ª±È…®√Ë£∫");
-				
-				LC3Parser parser = new LC3Parser();
-			    File file = new File("test2.asm");
-			    CodeBase cb;
-			    try {
-			                cb = parser.parse(new FileInputStream(file));
-			                cb.showBinaryInstructions();
-			        } catch (Exception e1) {
-			        	list.add(e1.getMessage());
-			                e1.printStackTrace();
-			                return;
-			        }
-			        list.add("±‡“Î≥…π¶"); 
-				
+				table.removeAll();
+				TableItem item = new TableItem(table, SWT.NONE);
+				item.setText("µ⁄“ª±È…®√Ë£∫");
 			}
 		});
 		newItemToolItem_2.setText("±‡“Î");
@@ -114,7 +95,10 @@ public class MainWindow {
 
 		text = new Text(sashForm, SWT.V_SCROLL | SWT.MULTI | SWT.H_SCROLL | SWT.BORDER);
 
-		list = new List(sashForm, SWT.BORDER);
+		table = new Table(sashForm, SWT.FULL_SELECTION | SWT.BORDER);
+		table.setHeaderVisible(true);
+
+		final DragSource tableDragSource = new DragSource(table, DND.DROP_NONE);
 		sashForm.setWeights(new int[] {1, 1 });
 
 		final Menu menu = new Menu(shell, SWT.BAR);
