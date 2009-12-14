@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import javax.swing.JPopupMenu;
 
 public abstract class ShowValue extends JPanel{
 	String name;
+	int value;
 	/**register's name is register. such as ax 's name is ax
 	 * memory's name is the address of the memory.
 	 * */
@@ -21,10 +23,23 @@ public abstract class ShowValue extends JPanel{
 	JPopupMenu   rightMenu;
 	
 	static ShowValue unique=null;
-	public ShowValue(String name){
+	public void setValue(int value)
+	{
+		this.value = value;
+		rePaint();
+	}
+	
+	public void rePaint()
+	{
+		this.remove(des);
+		addDescription();
+	}
+	public ShowValue(String name,int value){
 		this.name=name;
+		this.value = value;
 		initialize();
 	}
+	
 	public void initialize(){
 		addDescription();
 		this.addMouseListener(new ChangeValue());
@@ -48,9 +63,9 @@ public abstract class ShowValue extends JPanel{
 	}
 	public void setValue(){
 		ShowValue.this.setBackground(Color.white);
-		SetValueView temp=SetValueView.getInstance();
-		temp.setVisible(true);
-		temp.setDestination(name);
+		SetValueView temp=new SetValueView((JFrame)(this.getTopLevelAncestor()),name,value);
+		int value = temp.getValue();
+		setValue(value);
 	}
 	private void highLight(){
 		if(unique!=null){

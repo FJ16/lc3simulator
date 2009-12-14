@@ -11,6 +11,31 @@ public class StringFormatUtil {
 	   * @param b byte[]
 	   * @return void
 	   */
+	  
+	  public static String toBinString(int value)
+	  {
+		  String temp=Integer.toBinaryString(value);
+			for(;temp.length()<16;temp="0"+temp);
+		 
+		  return temp; 
+	  }
+	  
+	  public static String toHexString(int value)
+	  {
+		  String temp=Integer.toHexString(value);
+			for(;temp.length()<4;temp="0"+temp);
+		  temp="0x"+temp;
+		  return temp;
+	  }
+	  
+	  public static int toInt(String hex)
+	  {
+		  int result;
+		  String subString = hex.substring(hex.indexOf('x')+1);
+		  result = Integer.valueOf(subString, 16);
+		  return result;
+	  }
+	  
 	  public static void printHexString(String hint, byte[] b) {
 	    System.out.print(hint);
 	    for (int i = 0; i < b.length; i++) {

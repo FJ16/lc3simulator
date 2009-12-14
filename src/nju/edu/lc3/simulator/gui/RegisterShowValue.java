@@ -1,21 +1,32 @@
 package nju.edu.lc3.simulator.gui;
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+
+import nju.edu.lc3.util.StringFormatUtil;
 
 
 public class RegisterShowValue extends ShowValue{
+	RegisterModel register;
 	
 	public RegisterShowValue(String name){
-		super(name);
+		super(name,0);
+		
+		super.setValue(register.getValue());
 	}
 	
+	public void setValue(int value)
+	{
+		this.register.setValue(value);
+		super.setValue(value);
+	}
 	public void addDescription(){
-		des=new JLabel("   "+name+":0x0000");
+		register = RegisterModel.getRegister(name);
+		String hexString = StringFormatUtil.toHexString(register.getValue());
+		des=new JLabel(name+" "+hexString+" "+register.getValue());
 		this.setLayout(null);
 		this.setBackground(Color.white);
-		this.setSize(80, 20);
+		this.setSize(100, 20);
 		//this.setBorder(BorderFactory.createLineBorder(Color.blue));
 		this.add(des);
 		des.setBounds(0, 0, this.getWidth(), this.getHeight());

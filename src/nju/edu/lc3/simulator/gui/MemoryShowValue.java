@@ -2,11 +2,9 @@ package nju.edu.lc3.simulator.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import nju.edu.lc3.util.StringFormatUtil;
 
 
 public class MemoryShowValue extends ShowValue{
@@ -14,6 +12,7 @@ public class MemoryShowValue extends ShowValue{
 	PicturesRes picRes = PicturesRes.getInstance();
 	private JLabel  state;
 	int address;
+	MemoryModel memoryModel;
 
 	private static MemoryShowValue unique;//the ip can only point to one address at one time.
 	
@@ -24,7 +23,8 @@ public class MemoryShowValue extends ShowValue{
 		return memoryShowValue;
 	}
 	private MemoryShowValue(MemoryModel memory){
-		super("");
+		
+		super(memory.getName(),memory.getValue());
 		this.address = memory.getAddress();
 		this.setLayout(null);
 		this.setBackground(Color.white);
@@ -63,7 +63,11 @@ public class MemoryShowValue extends ShowValue{
 	public void addDescription(){
 		String temp=Integer.toHexString(address);
 		for(;temp.length()<4;temp="0"+temp);
-		des=new JLabel(""+temp+"            0x0005                NOP");	
+		String op="NOP";//×ª»¯³É»ã±à
+		int value = MemoryModel.getMemory(address).getValue();
+		String binValue = StringFormatUtil.toBinString(value);
+		String hexValue = StringFormatUtil.toHexString(value);
+		des=new JLabel(temp+"   "+binValue+"   "+hexValue+"   "+op);	
 		this.add(des);
 		des.setBounds(30, 0, this.getWidth()-20, this.getHeight());
 	}
@@ -72,9 +76,7 @@ public class MemoryShowValue extends ShowValue{
 			unique=this;
 		}
 		unique.state.setIcon(picRes.getInit());
-		
 		unique=this;
-		
 		state.setIcon(picRes.getRun());
 	}
 	
