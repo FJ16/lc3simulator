@@ -31,7 +31,7 @@ public class LC3Parser {
 
   public CodeBase parse(InputStream in)throws Exception  {
     LC3Parser parser = new LC3Parser(in);
-    CodeBase cb = CodeBase.getInstance();
+    CodeBase cb = new CodeBase();
     Instruction instruction = null;
     
     Token t =  parser.getNextToken();
@@ -52,7 +52,7 @@ public class LC3Parser {
    		}
    		
     }
-    System.out.println(cb.getInstructions().size());
+    //System.out.println(cb.getInstructions().size());
     return cb;  }
 }
 PARSER_END(LC3Parser)
