@@ -37,13 +37,12 @@ public class SetValueView extends JDialog {
 		{
 			result = StringFormatUtil.toInt(val.getText());
 		}
-		try{
+		else
+		{
 			result=Integer.parseInt(val.getText());
 		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		if (result>65535)
+			result=65535;
 		return result;
 		
 	}

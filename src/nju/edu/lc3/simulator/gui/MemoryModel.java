@@ -14,7 +14,6 @@ public class MemoryModel {
 		}
 	}
 	private boolean isBreakPoint;
-	private boolean isCurrent;
 	private int address;
 	private int value;
 	private String operation;
@@ -30,12 +29,7 @@ public class MemoryModel {
 	public void setBreakPoint(boolean isBreakPoint) {
 		this.isBreakPoint = isBreakPoint;
 	}
-	public boolean isCurrent() {
-		return isCurrent;
-	}
-	public void setCurrent(boolean isCurrent) {
-		this.isCurrent = isCurrent;
-	}
+
 	public int getAddress() {
 		return address;
 	}
@@ -59,17 +53,21 @@ public class MemoryModel {
 	{
 		return name;
 	}
-	
+	public boolean isCurrent()
+	{
+		if(this.address==MemoryShowValue.CURRENT_POINT)
+			return true;
+		return false;
+	}
 	
 	public void value2operation()
 	{
 		//根据值得到汇编码
 	}
-	public MemoryModel(boolean isBreakPoint, boolean isCurrent, int address,
+	public MemoryModel(boolean isBreakPoint, int address,
 			int value) {
 		super();
 		this.isBreakPoint = isBreakPoint;
-		this.isCurrent = isCurrent;
 		this.address = address;
 		this.value = value;
 		setName();
@@ -82,6 +80,6 @@ public class MemoryModel {
 	}
 	public MemoryModel(int address)
 	{
-		this(false,false,address,0);
+		this(false,address,0);
 	}
 }
