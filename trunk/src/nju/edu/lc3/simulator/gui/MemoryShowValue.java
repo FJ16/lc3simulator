@@ -13,8 +13,9 @@ public class MemoryShowValue extends ShowValue{
 	private JLabel  state;
 	int address;
 	MemoryModel memoryModel;
+	static int CURRENT_POINT=3000;
 
-	private static MemoryShowValue unique;//the ip can only point to one address at one time.
+	private static MemoryModel unique;//the ip can only point to one address at one time.
 	
 	
 	public static MemoryShowValue getMemoryShowValue(MemoryModel memory)
@@ -32,15 +33,12 @@ public class MemoryShowValue extends ShowValue{
 		this.addDescription();
 
 		state=new JLabel();
-		if(memory.isCurrent())
-			state.setIcon(picRes.getRun());
-		else if(memory.isBreakPoint())
-			state.setIcon(picRes.getbPoint());
-		else
-			state.setIcon(picRes.getInit());
-		
-		this.add(state);
-		state.setBounds(0, 0, 20, 20);
+		setStatePic();
+	}
+	public void setValue(int value)
+	{
+		MemoryModel.getMemory(address).setValue(value);
+		super.setValue(value);
 	}
 	public void getRightMenu(){
 		super.getRightMenu();
@@ -71,27 +69,34 @@ public class MemoryShowValue extends ShowValue{
 		this.add(des);
 		des.setBounds(30, 0, this.getWidth()-20, this.getHeight());
 	}
+	
+	public void setStatePic()
+	{
+		if(MemoryModel.getMemory(address).isCurrent())
+			state.setIcon(picRes.getRun());
+		else if(MemoryModel.getMemory(address).isBreakPoint())
+			state.setIcon(picRes.getbPoint());
+		else
+			state.setIcon(picRes.getInit());
+		
+		this.add(state);
+		state.setBounds(0, 0, 20, 20);
+	}
 	public void pointTo(){//the current ip point to this address
-		if(unique==null){
-			unique=this;
-		}
-		unique.state.setIcon(picRes.getInit());
-		unique=this;
-		state.setIcon(picRes.getRun());
+		CURRENT_POINT = this.address;
+		setStatePic();
+		((MemoryView)this.getParent()).scroll();
 	}
 	
+
 	public void addBreakPoint(){
-		if(unique!=null&& unique==this)
-			state.setIcon(picRes.getRun());
-		else
-			state.setIcon(picRes.getbPoint());
+		MemoryModel.getMemory(address).setBreakPoint(true);
+		setStatePic();
 	}
 	
 	public void removeBreakPoint(){
-		if(unique!=null&& unique==this)
-			state.setIcon(picRes.getRun());
-		else
-			state.setIcon(picRes.getInit());
+		MemoryModel.getMemory(address).setBreakPoint(false);
+		setStatePic();
 	}
 	public void setBackGround(Color col){
 		des.setBackground(col);

@@ -3,18 +3,23 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.PlainDocument;
+
+import nju.edu.lc3.util.StringFormatUtil;
 
 
 public class Simulator extends JFrame{
@@ -24,7 +29,8 @@ public class Simulator extends JFrame{
 	
 	
 	JPanel buttons;
-	JButton open,run,setpIn,setpOut,breakPoints,insBreak,jumpTo;
+	JButton open,run,setpIn,setpOut,breakPoints,insBreak;
+	JLabel jumpTo;
 	JTextField jumpDes;
 	IOConsole io;
 	
@@ -153,12 +159,29 @@ public class Simulator extends JFrame{
 		breakPoints.setBounds(xpos, ypos, width, height);
 		
 		xpos+=width;
-		jumpTo=new JButton("JT");
+		jumpTo=new JLabel("JumpTo:");
 		buttons.add(jumpTo);
 		jumpTo.setBounds(xpos, ypos, width, height);
 		
 		xpos+=width;
 		jumpDes=new JTextField();
+		jumpDes.addKeyListener(new KeyAdapter() {
+			public void keyPressed(final KeyEvent e) {
+				if(e.getKeyChar()==KeyEvent.VK_ENTER)
+				{
+					int address;
+					if (jumpDes.getText().indexOf('x')>=0)
+					{
+						address = StringFormatUtil.toInt(jumpDes.getText());
+					}
+					else
+					{
+						address = Integer.parseInt(jumpDes.getText());
+					}
+					memView.scroll.setValue(address);
+				}
+			}
+		});
 		jumpDes.setDocument(new MyDocument(8));
 		buttons.add(jumpDes);
 		jumpDes.setBounds(xpos, ypos, 60, height);
