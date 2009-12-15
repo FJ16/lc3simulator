@@ -1,6 +1,7 @@
 package nju.edu.lc3.simulator.gui;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.PlainDocument;
 
-import nju.edu.lc3.util.StringFormatUtil;
+import nju.edu.lc3.util.BitUtil;
 
 
 public class Simulator extends JFrame{
@@ -85,7 +86,8 @@ public class Simulator extends JFrame{
 	
 	public void initialize(){
 		this.setResizable(true);
-		this.setSize(400,780);
+		this.setSize(405,780);
+		this.setResizable(false);
 		this.setTitle("LC3 Simulator");
 		
 		Container cp=this.getContentPane();
@@ -172,7 +174,7 @@ public class Simulator extends JFrame{
 					int address;
 					if (jumpDes.getText().indexOf('x')>=0)
 					{
-						address = StringFormatUtil.toInt(jumpDes.getText());
+						address = BitUtil.toInt(jumpDes.getText());
 					}
 					else
 					{
