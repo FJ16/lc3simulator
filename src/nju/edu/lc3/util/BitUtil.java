@@ -38,17 +38,61 @@ public class BitUtil {
 		return result;
 	}
 
-	public static int bitarrayToInt(char[] bit, int start, int length) {
-		char[] temp = new char[length];
-		for (int i = start; i < start+length; i++) {
-			temp[i] = bit[i];
+	public static int bitarrayToInt(char[] bit, int start, int length,boolean isSigned) {
+		if(!isSigned){
+			char[] temp = new char[length];
+			for (int i = start; i < start+length; i++) {
+				temp[i] = bit[i];
+			}
+	
+			int value = 0;
+			for (int i = 0; i < temp.length; i++) {
+				value += value(temp[i]) * Math.pow(2, temp.length - 1 - i);
+			}
+			return value;
 		}
-
-		int value = 0;
-		for (int i = 0; i < temp.length; i++) {
-			value += value(temp[i]) * Math.pow(2, temp.length - 1 - i);
+		else
+		{
+			char[] temp = new char[length];
+			for (int i = start; i < start+length; i++) {
+				temp[i] = bit[i];
+			}
+			int value = 0;
+			if(temp[0]=='0')
+			{
+				for (int i = 1; i < temp.length; i++) {
+					value += value(temp[i]) * Math.pow(2, temp.length - 1 - i);
+				}
+			}
+			else
+			{
+				for(int i = 1; i<temp.length;i++)
+				{
+					value -= opp_value(temp[i]) * Math.pow(2, temp.length - 1 - i);
+				}
+				value-=1;
+			}
+			return value;
 		}
-		return value;
+	}
+	
+	public static void main(String[] args)
+	{
+		char[] bit1 = {'0','0','1','1'};
+		char[] bit2 = {'1','0','1','1'};
+		System.out.println(BitUtil.bitarrayToInt(bit1, 0, 4, false));
+		System.out.println(BitUtil.bitarrayToInt(bit1, 0, 4, true));
+		System.out.println(BitUtil.bitarrayToInt(bit2, 0, 4, false));
+		System.out.println(BitUtil.bitarrayToInt(bit2, 0, 4, true));
+	}
+	
+	private static int opp_value(char i)
+	{
+		if (i == '1') {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 
 	private static int value(char i) {

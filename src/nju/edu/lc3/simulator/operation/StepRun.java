@@ -42,7 +42,7 @@ public class StepRun {
 	
 	private int getOperation(char[] bit)
 	{
-		return BitUtil.bitarrayToInt(bit, 0, 4);
+		return BitUtil.bitarrayToInt(bit, 0, 4,false);
 	}
 	public static void main(String[] args)
 	{

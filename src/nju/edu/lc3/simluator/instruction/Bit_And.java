@@ -8,7 +8,6 @@ public class Bit_And extends BitInstruction {
 	int sr1;
 	int sr2;
 	int imm5;
-	char[] bit;
 	int type;
 	
 	
@@ -16,16 +15,16 @@ public class Bit_And extends BitInstruction {
 	public Bit_And(char[] bit)
 	{
 		this.bit = bit;
-		dr = BitUtil.bitarrayToInt(bit, 4, 3);
-		sr1 = BitUtil.bitarrayToInt(bit, 7, 3);
+		dr = BitUtil.bitarrayToInt(bit, 4, 3,false);
+		sr1 = BitUtil.bitarrayToInt(bit, 7, 3,false);
 		if(bit[10]=='0')
 		{
-			sr2 = BitUtil.bitarrayToInt(bit, 13, 3);
+			sr2 = BitUtil.bitarrayToInt(bit, 13, 3,false);
 			type =0;
 		}
 		else
 		{
-			imm5 = BitUtil.bitarrayToInt(bit, 11, 5);
+			imm5 = BitUtil.bitarrayToInt(bit, 11, 5,true);
 			type =1;
 		}
 	}
@@ -41,11 +40,11 @@ public class Bit_And extends BitInstruction {
 		String result="AND ";
 		if(type ==0)
 		{
-			result=result+"R"+dr+" "+"R"+sr1+" "+"R"+sr2;
+			result=result+"R"+dr+","+"R"+sr1+","+"R"+sr2;
 		}
 		else
 		{
-			result=result+"R"+dr+" "+"R"+sr1+" "+"#"+imm5;
+			result=result+"R"+dr+","+"R"+sr1+",#"+imm5;
 		}
 		return result;
 		
