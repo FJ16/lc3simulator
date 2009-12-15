@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import nju.edu.lc3.util.StringFormatUtil;
+import nju.edu.lc3.util.BitUtil;
 
 
 public class MemoryShowValue extends ShowValue{
@@ -63,8 +63,8 @@ public class MemoryShowValue extends ShowValue{
 		for(;temp.length()<4;temp="0"+temp);
 		String op="NOP";//×ª»¯³É»ã±à
 		int value = MemoryModel.getMemory(address).getValue();
-		String binValue = StringFormatUtil.toBinString(value);
-		String hexValue = StringFormatUtil.toHexString(value);
+		String binValue = BitUtil.toBinString(value);
+		String hexValue = BitUtil.toHexString(value);
 		des=new JLabel(temp+"   "+binValue+"   "+hexValue+"   "+op);	
 		this.add(des);
 		des.setBounds(30, 0, this.getWidth()-20, this.getHeight());

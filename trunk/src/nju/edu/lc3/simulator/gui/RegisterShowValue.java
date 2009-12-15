@@ -3,7 +3,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-import nju.edu.lc3.util.StringFormatUtil;
+import nju.edu.lc3.util.BitUtil;
 
 
 public class RegisterShowValue extends ShowValue{
@@ -22,7 +22,7 @@ public class RegisterShowValue extends ShowValue{
 	}
 	public void addDescription(){
 		register = RegisterModel.getRegister(name);
-		String hexString = StringFormatUtil.toHexString(register.getValue());
+		String hexString = BitUtil.toHexString(register.getValue());
 		des=new JLabel(name+" "+hexString+" "+register.getValue());
 		this.setLayout(null);
 		this.setBackground(Color.white);

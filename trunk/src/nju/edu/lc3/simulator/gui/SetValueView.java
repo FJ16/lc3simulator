@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.PlainDocument;
 
-import nju.edu.lc3.util.StringFormatUtil;
+import nju.edu.lc3.util.BitUtil;
 
 public class SetValueView extends JDialog {
 	JLabel description;
@@ -35,7 +35,7 @@ public class SetValueView extends JDialog {
 		int result = 0;
 		if(val.getText().indexOf('x')>=0)
 		{
-			result = StringFormatUtil.toInt(val.getText());
+			result = BitUtil.toInt(val.getText());
 		}
 		else
 		{
