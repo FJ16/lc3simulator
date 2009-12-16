@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 
 public class RegisterView extends JPanel{
-	RegisterShowValue [] registers;
+	RegisterShowValue[] registers;
 	public RegisterView(){
 		
 		
@@ -37,6 +37,7 @@ public class RegisterView extends JPanel{
 		for(i=0;i<registers.length;i++){
 			this.add(registers[i]);
 		}
+		
 		
 		this.setSize(380,registers[0].getHeight()*row);
 	}

@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+
+import nju.edu.lc3.simluator.instruction.BitInstruction;
+import nju.edu.lc3.simulator.operation.Translator;
 import nju.edu.lc3.util.BitUtil;
 
 
@@ -13,7 +16,7 @@ public class MemoryShowValue extends ShowValue{
 	private JLabel  state;
 	int address;
 	MemoryModel memoryModel;
-	static int CURRENT_POINT=3000;
+	//static int CURRENT_POINT=3000;
 
 	private static MemoryModel unique;//the ip can only point to one address at one time.
 	
@@ -61,7 +64,9 @@ public class MemoryShowValue extends ShowValue{
 	public void addDescription(){
 		String temp=Integer.toHexString(address);
 		for(;temp.length()<4;temp="0"+temp);
-		String op="NOP";//转化成汇编
+		
+		BitInstruction ins = Translator.decode(value);
+		String op=ins.getSource();//转化成汇编
 		int value = MemoryModel.getMemory(address).getValue();
 		String binValue = BitUtil.toBinString(value);
 		String hexValue = BitUtil.toHexString(value);
@@ -73,17 +78,18 @@ public class MemoryShowValue extends ShowValue{
 	public void setStatePic()
 	{
 		if(MemoryModel.getMemory(address).isCurrent())
-			state.setIcon(picRes.getRun());
+			state.setIcon(picRes.pointto);
 		else if(MemoryModel.getMemory(address).isBreakPoint())
-			state.setIcon(picRes.getbPoint());
+			state.setIcon(picRes.bPoint);
 		else
-			state.setIcon(picRes.getInit());
+			state.setIcon(picRes.init);
 		
 		this.add(state);
 		state.setBounds(0, 0, 20, 20);
 	}
 	public void pointTo(){//the current ip point to this address
-		CURRENT_POINT = this.address;
+		RegisterModel.getRegister("PC").setValue(this.address);
+		((Simulator)(this.getTopLevelAncestor())).rePaintAll();
 		setStatePic();
 		((MemoryView)this.getParent()).scroll();
 	}

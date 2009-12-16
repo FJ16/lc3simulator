@@ -1,5 +1,6 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Jsr extends BitInstruction{
@@ -25,6 +26,17 @@ public class Bit_Jsr extends BitInstruction{
 	@Override
 	public boolean execute() {
 		/*先把PC的值放入R7，然后跳转*/
+		int pc =RegisterModel.getRegister("PC").getValue();
+		RegisterModel.getRegister(7).setValue(pc);
+		if(type == 1)
+		{
+			RegisterModel.getRegister("PC").setValue(pc+PCoffset11);
+		}
+		if(type == 0)
+		{
+			int address = RegisterModel.getRegister(baseR).getValue();
+			RegisterModel.getRegister(address);
+		}
 		return true;
 	}
 

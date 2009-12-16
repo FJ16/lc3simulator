@@ -1,5 +1,6 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Br extends BitInstruction{
@@ -26,7 +27,17 @@ public class Bit_Br extends BitInstruction{
 	public boolean execute() {
 		/*if((n && N)||(z && Z)||(p && P))
 			PC = PC+ SEXT(PCoffset9)*/
-		return false;
+		
+		boolean n_cur = (RegisterModel.getRegister("PSR").getValue()&4)==0;
+		boolean z_cur = (RegisterModel.getRegister("PSR").getValue()&2)==0;
+		boolean p_cur = (RegisterModel.getRegister("PSR").getValue()&1)==0;
+		if((n && n_cur)||(z && z_cur)||(p && p_cur))
+		{
+			int temp = RegisterModel.getRegister("PC").getValue();
+			temp+=PCoffset9;
+			RegisterModel.getRegister("PC").setValue(temp);
+		}
+		return true;
 	}
 
 	@Override

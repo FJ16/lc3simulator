@@ -1,5 +1,8 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.MemoryModel;
+import nju.edu.lc3.simulator.gui.RegisterModel;
+import nju.edu.lc3.simulator.operation.MachineRun;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Ld extends BitInstruction{
@@ -17,7 +20,11 @@ public class Bit_Ld extends BitInstruction{
 	@Override
 	public boolean execute() {
 		/*DR=mem[PC+PCofffset9]*/
-		return false;
+		int pc =RegisterModel.getRegister("PC").getValue();
+		int value = MemoryModel.getMemory(pc+PCoffset9).getValue();
+		RegisterModel.getRegister(dr).setValue(value);
+		MachineRun.getInstance().setcc(RegisterModel.getRegister(dr).getValue());
+		return true;
 	}
 
 	@Override

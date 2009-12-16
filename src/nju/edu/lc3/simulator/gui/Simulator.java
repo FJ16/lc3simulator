@@ -1,4 +1,5 @@
 package nju.edu.lc3.simulator.gui;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -20,24 +21,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.PlainDocument;
 
+import nju.edu.lc3.simulator.operation.StepRun;
 import nju.edu.lc3.util.BitUtil;
 
-
-public class Simulator extends JFrame{
+public class Simulator extends JFrame {
 	RegisterView regView;
 	MemoryView memView;
-	
-	
-	
+
 	JPanel buttons;
-	JButton open,run,setpIn,setpOut,breakPoints,insBreak;
+	JButton open, run, step,setpIn, setpOut, breakPoints, insBreak;
 	JLabel jumpTo;
 	JTextField jumpDes;
 	IOConsole io;
-	
-	public Simulator(){
-		
-		io=new IOConsole();
+
+	public Simulator() {
+
+		io = new IOConsole();
 		initialize();
 
 		final JMenuBar menuBar = new JMenuBar();
@@ -83,101 +82,129 @@ public class Simulator extends JFrame{
 		newItemMenuItem_6.setText("About");
 		helpMenu.add(newItemMenuItem_6);
 	}
-	
-	public void initialize(){
+
+	public void initialize() {
 		this.setResizable(true);
-		this.setSize(405,780);
+		this.setSize(405, 780);
 		this.setResizable(false);
 		this.setTitle("LC3 Simulator");
-		
-		Container cp=this.getContentPane();
+
+		Container cp = this.getContentPane();
 		cp.setLayout(null);
 		cp.setBackground(Color.white);
-		
-		int ypos=0;
+
+		int ypos = 0;
 		initizlizeMenu();
-		
-		buttons=new JPanel();	
-		cp.add(buttons);		
+
+		buttons = new JPanel();
+		cp.add(buttons);
 		buttons.setBounds(0, ypos, this.getWidth(), 30);
 		buttons.setBorder(BorderFactory.createRaisedBevelBorder());
 		initializeButtons();
-		
-		ypos+=buttons.getHeight()+5;
-		
-		
-		regView=new RegisterView();
+
+		ypos += buttons.getHeight() + 5;
+
+		regView = new RegisterView();
 		cp.add(regView);
 		regView.setBounds(10, 33, regView.getWidth(), 87);
-		
-		ypos+=regView.getHeight();
 
-		
-		
-		memView=new MemoryView();
+		ypos += regView.getHeight();
+
+		memView = new MemoryView();
 		cp.add(memView);
 		memView.setBounds(0, ypos, memView.getWidth(), memView.getHeight());
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		this.setVisible(true);
 	}
-	public void initializeButtons(){
-		int xpos=0;
-		int width=55;
-		int height=25;
-		int ypos=3;
+	
+	public void rePaintAll()
+	{
+		for(RegisterShowValue reg :regView.registers)
+		{
+			reg.rePaint();
+		}
+		memView.scroll();
 		
+	}
+
+	public void initializeButtons() {
+		int xpos = 0;
+		int width = 45;
+		int height = 25;
+		int ypos = 3;
+
 		buttons.setLayout(null);
-		
-		open=new JButton("OP");
+
+		open = new JButton("OP");
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
-				
-				//System.out.println(io.text.getText());
+
+				// System.out.println(io.text.getText());
 			}
 		});
 		buttons.add(open);
+		open.setIcon(PicturesRes.getInstance().open);
+		open.setToolTipText("Open File");
 		open.setBounds(xpos, ypos, width, height);
-		
-		xpos+=width;
-		run=new JButton("RUN");
+
+		xpos += width;
+		run = new JButton();
+		run.setText("RUN");
+		run.setIcon(PicturesRes.getInstance().run);
 		buttons.add(run);
+		run.setToolTipText("Run Program");
 		run.setBounds(xpos, ypos, width, height);
 		
 		xpos+=width;
-		setpIn=new JButton("SI");
+		step = new JButton();
+		step.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				StepRun run = new StepRun();
+				run.runOneStep();
+				rePaintAll();
+			}
+		});
+		step.setIcon(PicturesRes.getInstance().stepOver);
+		step.setText("Step");
+		step.setToolTipText("Step Over");
+		step.setBounds(xpos, ypos, width, height);
+		buttons.add(step);
+
+		xpos += width;
+		setpIn = new JButton("SI");
+		setpIn.setIcon(PicturesRes.getInstance().stepInto);
+		setpIn.setToolTipText("Step Into");
 		buttons.add(setpIn);
 		setpIn.setBounds(xpos, ypos, width, height);
-		
-		xpos+=width;
-		setpOut=new JButton("SO");
+
+		xpos += width;
+		setpOut = new JButton("SO");
 		buttons.add(setpOut);
+		setpOut.setIcon(PicturesRes.getInstance().stepOut);
+		setpOut.setToolTipText("Step Out");
 		setpOut.setBounds(xpos, ypos, width, height);
-		
-		xpos+=width;
-		breakPoints=new JButton("BP");
+
+		xpos += width;
+		breakPoints = new JButton("BP");
 		buttons.add(breakPoints);
 		breakPoints.setBounds(xpos, ypos, width, height);
-		
-		xpos+=width;
-		jumpTo=new JLabel("JumpTo:");
+
+		xpos += width;
+		jumpTo = new JLabel("JumpTo:");
 		buttons.add(jumpTo);
 		jumpTo.setBounds(xpos, ypos, width, height);
-		
-		xpos+=width;
-		jumpDes=new JTextField();
+
+		xpos += width;
+		jumpDes = new JTextField();
 		jumpDes.addKeyListener(new KeyAdapter() {
 			public void keyPressed(final KeyEvent e) {
-				if(e.getKeyChar()==KeyEvent.VK_ENTER)
-				{
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 					int address;
-					if (jumpDes.getText().indexOf('x')>=0)
-					{
+					if (jumpDes.getText().indexOf('x') >= 0) {
 						address = BitUtil.toInt(jumpDes.getText());
-					}
-					else
-					{
+					} else {
 						address = Integer.parseInt(jumpDes.getText());
 					}
 					memView.scroll.setValue(address);
@@ -188,33 +215,37 @@ public class Simulator extends JFrame{
 		buttons.add(jumpDes);
 		jumpDes.setBounds(xpos, ypos, 60, height);
 		
-		
+
 	}
 	
-	public void initizlizeMenu(){
-		int xpos=0;
-		int width=80,height=25;
-		
-		xpos+=width;
-		
-		xpos+=width;
-		
-		xpos+=width;
+	public void initizlizeMenu() {
+		int xpos = 0;
+		int width = 80, height = 25;
+
+		xpos += width;
+
+		xpos += width;
+
+		xpos += width;
 	}
-	
-	class   MyDocument     extends   PlainDocument   {   
-		int   maxLen   =   20;   
-		public   MyDocument(int   maxLen){   
-			this.maxLen   =   maxLen;   
-		}   
-		public   void   insertString(int   offset
-				,   String   s,   javax.swing.text.AttributeSet   attributeSet)
-		throws   javax.swing.text.BadLocationException   {   
-		        //   判断长度   
-			String   strLastText   =   super.getText(0,super.getLength());			
-		   	if(strLastText.length() >= maxLen)return   ;
-		   	if(s.length()+   strLastText.length()   >maxLen)return;
-		   	super.insertString(offset, s, attributeSet);
+
+	class MyDocument extends PlainDocument {
+		int maxLen = 20;
+
+		public MyDocument(int maxLen) {
+			this.maxLen = maxLen;
+		}
+
+		public void insertString(int offset, String s,
+				javax.swing.text.AttributeSet attributeSet)
+				throws javax.swing.text.BadLocationException {
+			// 判断长度
+			String strLastText = super.getText(0, super.getLength());
+			if (strLastText.length() >= maxLen)
+				return;
+			if (s.length() + strLastText.length() > maxLen)
+				return;
+			super.insertString(offset, s, attributeSet);
 		}
 	}
 }

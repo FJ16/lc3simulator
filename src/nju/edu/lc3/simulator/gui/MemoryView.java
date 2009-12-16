@@ -22,6 +22,7 @@ public class MemoryView extends JPanel implements Scrollable{
 		scroll.setValue(12288);
 	}
 	public void addMemory(int address){
+		
 		memory=new MemoryShowValue[28];
 		for(int i=0;i<memory.length;i++){
 			memory[i]=MemoryShowValue.getMemoryShowValue(MemoryModel.getMemory(address+i));			

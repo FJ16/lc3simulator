@@ -1,5 +1,7 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.MemoryModel;
+import nju.edu.lc3.simulator.gui.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Str extends BitInstruction{
@@ -18,7 +20,11 @@ public class Bit_Str extends BitInstruction{
 	@Override
 	public boolean execute() {
 		/*mem[BaseR+offset6]=sr*/
-		return false;
+		int value = RegisterModel.getRegister(sr).getValue();
+		int address = RegisterModel.getRegister(baseR).getValue()+offset6;
+		MemoryModel.getMemory(address).setValue(value);
+		
+		return true;
 	}
 
 	@Override

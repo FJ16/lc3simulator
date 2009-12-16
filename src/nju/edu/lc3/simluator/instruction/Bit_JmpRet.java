@@ -1,5 +1,6 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_JmpRet extends BitInstruction{
@@ -21,7 +22,9 @@ public class Bit_JmpRet extends BitInstruction{
 	@Override
 	public boolean execute() {
 		/*PC<-BaseR*/
-		return false;
+		int temp = RegisterModel.getRegister(baseR).getValue();
+		RegisterModel.getRegister("PC").setValue(temp);
+		return true;
 	}
 
 	@Override
