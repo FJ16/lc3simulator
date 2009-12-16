@@ -1,5 +1,7 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.RegisterModel;
+import nju.edu.lc3.simulator.operation.MachineRun;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_And extends BitInstruction {
@@ -31,8 +33,21 @@ public class Bit_And extends BitInstruction {
 
 	@Override
 	public boolean execute() {
-		// TODO Auto-generated method stub
-		return false;
+		RegisterModel dr_m = RegisterModel.getRegister(dr);
+		RegisterModel sr1_m = RegisterModel.getRegister(sr1);
+		if(type==0)
+		{
+			RegisterModel sr2_m = RegisterModel.getRegister(sr2);
+			dr_m.setValue(sr1_m.getValue()&sr2_m.getValue());
+			
+		}
+		
+		if(type==1)
+		{
+			dr_m.setValue(sr1_m.getValue()&imm5);
+		}
+		MachineRun.getInstance().setcc(dr_m.getValue());
+		return true;
 	}
 	
 	public String getSource()

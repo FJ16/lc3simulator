@@ -1,5 +1,7 @@
 package nju.edu.lc3.simluator.instruction;
 
+import nju.edu.lc3.simulator.gui.MemoryModel;
+import nju.edu.lc3.simulator.gui.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Sti extends BitInstruction{
@@ -16,7 +18,11 @@ public class Bit_Sti extends BitInstruction{
 	@Override
 	public boolean execute() {
 		/*mem[mem[PC+PCofffset9]]=SR*/
-		return false;
+		int value = RegisterModel.getRegister(sr).getValue();
+		int index = RegisterModel.getRegister("PC").getValue()+PCoffset9;
+		int address = MemoryModel.getMemory(index).getValue();
+		MemoryModel.getMemory(address).setValue(value);
+		return true;
 	}
 
 	@Override

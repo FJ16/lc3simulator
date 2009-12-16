@@ -14,7 +14,7 @@ public class RegisterModel {
 		{
 			registerModel.add(new RegisterModel("R"+i,0));
 		}
-		registerModel.add(new RegisterModel("PC",0));
+		registerModel.add(new RegisterModel("PC",12288));
 		registerModel.add(new RegisterModel("IR",0));
 		registerModel.add(new RegisterModel("PSR",0));
 		registerModel.add(new RegisterModel("CC",0));
@@ -29,6 +29,11 @@ public class RegisterModel {
 				result = temp;
 		}
 		return result;
+	}
+	
+	public static RegisterModel getRegister(int index)
+	{
+		return(getRegister("R"+index));
 	}
 	public String getName() {
 		return name;

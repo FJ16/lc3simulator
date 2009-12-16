@@ -2,29 +2,27 @@ package nju.edu.lc3.simluator.instruction;
 
 import nju.edu.lc3.util.BitUtil;
 
-public class Bit_Rti extends BitInstruction{
-	
-	public Bit_Rti(char[] bit)
+public class Bit_Fill extends BitInstruction{
+
+	public Bit_Fill(char[] bit)
 	{
 		this.bit = bit;
 	}
-
 	@Override
 	public boolean execute() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public String getSource() {
 		// TODO Auto-generated method stub
-		return null;
+		return ".FILL "+BitUtil.bitarrayToInt(bit, 0, 16, true);
 	}
 
 	@Override
 	public boolean validate() {
-		if(BitUtil.bitarrayToInt(bit, 4, 12, false)!=0)
-			return false;
+		// TODO Auto-generated method stub
 		return true;
 	}
 

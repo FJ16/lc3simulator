@@ -42,7 +42,7 @@ public class BitUtil {
 		if(!isSigned){
 			char[] temp = new char[length];
 			for (int i = start; i < start+length; i++) {
-				temp[i] = bit[i];
+				temp[i-start] = bit[i];
 			}
 	
 			int value = 0;
@@ -55,7 +55,7 @@ public class BitUtil {
 		{
 			char[] temp = new char[length];
 			for (int i = start; i < start+length; i++) {
-				temp[i] = bit[i];
+				temp[i-start] = bit[i];
 			}
 			int value = 0;
 			if(temp[0]=='0')

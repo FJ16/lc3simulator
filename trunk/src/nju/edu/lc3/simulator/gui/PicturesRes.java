@@ -5,30 +5,31 @@ import javax.swing.ImageIcon;
 
 public class PicturesRes {
 	private static PicturesRes instance;
-	private Icon bPoint;//break point
-	private Icon init;
-	private Icon run;
+	Icon bPoint;//break point
+	Icon init;
+	Icon pointto;
+	Icon open;
+	Icon run;
+	Icon stepOver;
+	Icon stepInto;
+	Icon stepOut;
 	
-	
-	public Icon getbPoint() {
-		return bPoint;
-	}
-	public Icon getInit() {
-		return init;
-	}
-	public Icon getRun() {
-		return run;
-	}
 	private PicturesRes()
 	{
 		initIcon();
 	}
 	
+	
 	private void initIcon()
 	{
 		bPoint=new ImageIcon("breakPoint.gif");
 		init=new ImageIcon("init.gif");
-		run = new ImageIcon("pointto.gif");
+		pointto = new ImageIcon("pointto.gif");
+		open = new ImageIcon("open.png");
+		run = new ImageIcon("run.png");
+		stepOver = new ImageIcon("stepOver.png");
+		stepInto = new ImageIcon("stepIn.png");
+		stepOut = new ImageIcon("stepOut.png");
 	}
 	
 	public static PicturesRes getInstance()

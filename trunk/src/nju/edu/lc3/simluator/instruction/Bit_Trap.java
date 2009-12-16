@@ -16,6 +16,7 @@ public class Bit_Trap extends BitInstruction{
 	@Override
 	public boolean execute() {
 		/*R7 = PC; PC = mem[trapvect8]*/
+		
 		return false;
 	}
 

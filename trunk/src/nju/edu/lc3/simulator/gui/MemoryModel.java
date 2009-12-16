@@ -55,7 +55,7 @@ public class MemoryModel {
 	}
 	public boolean isCurrent()
 	{
-		if(this.address==MemoryShowValue.CURRENT_POINT)
+		if(this.address==RegisterModel.getRegister("PC").getValue())
 			return true;
 		return false;
 	}

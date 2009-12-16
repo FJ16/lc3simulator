@@ -1,36 +1,27 @@
 package nju.edu.lc3.simulator.operation;
 
-import nju.edu.lc3.simluator.instruction.*;
-import nju.edu.lc3.simulator.gui.MemoryModel;
-import nju.edu.lc3.simulator.gui.RegisterModel;
+import nju.edu.lc3.simluator.instruction.BitInstruction;
+import nju.edu.lc3.simluator.instruction.Bit_Add;
+import nju.edu.lc3.simluator.instruction.Bit_And;
+import nju.edu.lc3.simluator.instruction.Bit_Br;
+import nju.edu.lc3.simluator.instruction.Bit_Fill;
+import nju.edu.lc3.simluator.instruction.Bit_JmpRet;
+import nju.edu.lc3.simluator.instruction.Bit_Jsr;
+import nju.edu.lc3.simluator.instruction.Bit_Ld;
+import nju.edu.lc3.simluator.instruction.Bit_Ldi;
+import nju.edu.lc3.simluator.instruction.Bit_Ldr;
+import nju.edu.lc3.simluator.instruction.Bit_Lea;
+import nju.edu.lc3.simluator.instruction.Bit_Not;
+import nju.edu.lc3.simluator.instruction.Bit_Rti;
+import nju.edu.lc3.simluator.instruction.Bit_St;
+import nju.edu.lc3.simluator.instruction.Bit_Sti;
+import nju.edu.lc3.simluator.instruction.Bit_Str;
+import nju.edu.lc3.simluator.instruction.Bit_Trap;
 import nju.edu.lc3.util.BitUtil;
 import nju.edu.lc3.word.Bits;
 
-public class StepRun {
-	public void StepRun()
-	{
-		
-	}
-	
-	public void runOneStep()
-	{
-		int op = fetch();
-		BitInstruction ins = decode(op);
-		ins.execute();
-	}
-	
-	private int fetch()
-	{
-		int result=0;
-		int address = RegisterModel.getRegister("PC").getValue();
-		
-		result = MemoryModel.getMemory(address).getValue();
-		address++;
-		RegisterModel.getRegister("PC").setValue(address);
-		return result;
-	}
-	
-	private BitInstruction decode(int value)
+public class Translator {
+	public static BitInstruction decode(int value)
 	{
 		char[] bit = null;
 		try {
@@ -97,14 +88,8 @@ public class StepRun {
 			
 		return instruction;
 	}
-	
-	private int getOperation(char[] bit)
+	private static int getOperation(char[] bit)
 	{
 		return BitUtil.bitarrayToInt(bit, 0, 4,false);
-	}
-	public static void main(String[] args)
-	{
-		StepRun test = new StepRun();
-		test.decode(7192);
 	}
 }
