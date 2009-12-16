@@ -91,7 +91,7 @@ public class MemoryShowValue extends ShowValue{
 		RegisterModel.getRegister("PC").setValue(this.address);
 		((Simulator)(this.getTopLevelAncestor())).rePaintAll();
 		setStatePic();
-		((MemoryView)this.getParent()).scroll();
+		
 	}
 	
 

@@ -35,7 +35,7 @@ public class Bit_Jsr extends BitInstruction{
 		if(type == 0)
 		{
 			int address = RegisterModel.getRegister(baseR).getValue();
-			RegisterModel.getRegister(address);
+			RegisterModel.getRegister("PC").setValue(address);
 		}
 		return true;
 	}
@@ -49,7 +49,7 @@ public class Bit_Jsr extends BitInstruction{
 		}
 		else
 		{
-			result="JSRR "+baseR;
+			result="JSRR R"+baseR;
 		}
 		return result;
 	}
