@@ -3,7 +3,7 @@ package nju.edu.lc3.simluator.instruction;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Not extends BitInstruction{
-	
+	char[] opcode = {'1','0','0','1'};
 	int dr;
 	int sr;
 	public Bit_Not(char[] bit)

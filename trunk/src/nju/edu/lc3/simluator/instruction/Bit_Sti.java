@@ -2,12 +2,12 @@ package nju.edu.lc3.simluator.instruction;
 
 import nju.edu.lc3.util.BitUtil;
 
-public class Bit_St extends BitInstruction{
-	char[] opcode = {'0','0','1','1'};
+public class Bit_Sti extends BitInstruction{
+	char[] opcode ={'1','0','1','1'};
 	int sr;
 	int PCoffset9;
 	
-	public Bit_St(char[] bit)
+	public Bit_Sti(char[] bit)
 	{
 		this.bit = bit;
 		sr = BitUtil.bitarrayToInt(bit, 4, 3,false);
@@ -15,13 +15,13 @@ public class Bit_St extends BitInstruction{
 	}
 	@Override
 	public boolean execute() {
-		/*mem[PC+PCofffset9]=sr*/
+		/*mem[mem[PC+PCofffset9]]=SR*/
 		return false;
 	}
 
 	@Override
 	public String getSource() {
-		return "ST R"+sr+","+PCoffset9;
+		return "STI R"+sr+","+PCoffset9;
 	}
 
 	@Override
@@ -29,5 +29,4 @@ public class Bit_St extends BitInstruction{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }
