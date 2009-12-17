@@ -19,12 +19,12 @@ public class MachineRun {
 		else if(value>0)
 		{
 			int temp = RegisterModel.getRegister("PSR").getValue();
-			RegisterModel.getRegister("PSR").setValue(temp|4);
+			RegisterModel.getRegister("PSR").setValue(temp|1);
 		}
 		else if(value<0)
 		{
 			int temp = RegisterModel.getRegister("PSR").getValue();
-			RegisterModel.getRegister("PSR").setValue(temp|1);
+			RegisterModel.getRegister("PSR").setValue(temp|4);
 		}
 	}
 }
