@@ -2,15 +2,12 @@ package nju.edu.lc3.simulator.gui;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.PlainDocument;
 
-import nju.edu.lc3.simulator.operation.StepRun;
+import nju.edu.lc3.simulator.operation.RunProgram;
 import nju.edu.lc3.util.BitUtil;
 
 public class Simulator extends JFrame {
@@ -29,7 +26,7 @@ public class Simulator extends JFrame {
 	MemoryView memView;
 
 	JPanel buttons;
-	JButton open, run, step,setpIn, setpOut, breakPoints, insBreak;
+	JButton open, run, step,setpIn, setpOut, stop, insBreak;
 	JLabel jumpTo;
 	JTextField jumpDes;
 	IOConsole io;
@@ -88,14 +85,11 @@ public class Simulator extends JFrame {
 		this.setSize(405, 780);
 		this.setResizable(false);
 		this.setTitle("LC3 Simulator");
-
 		Container cp = this.getContentPane();
 		cp.setLayout(null);
 		cp.setBackground(Color.white);
-
 		int ypos = 0;
 		initizlizeMenu();
-
 		buttons = new JPanel();
 		cp.add(buttons);
 		buttons.setBounds(0, ypos, this.getWidth(), 30);
@@ -131,13 +125,13 @@ public class Simulator extends JFrame {
 
 	public void initializeButtons() {
 		int xpos = 0;
-		int width = 45;
+		int width = 25;
 		int height = 25;
 		int ypos = 3;
 
 		buttons.setLayout(null);
 
-		open = new JButton("OP");
+		open = new JButton();
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
 
@@ -151,8 +145,12 @@ public class Simulator extends JFrame {
 
 		xpos += width;
 		run = new JButton();
-		run.setText("RUN");
 		run.setIcon(PicturesRes.getInstance().run);
+		run.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+									
+			}
+		});
 		buttons.add(run);
 		run.setToolTipText("Run Program");
 		run.setBounds(xpos, ypos, width, height);
@@ -161,42 +159,47 @@ public class Simulator extends JFrame {
 		step = new JButton();
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
-				StepRun run = new StepRun();
+				RunProgram run = new RunProgram();
 				run.runOneStep();
 				rePaintAll();
 			}
 		});
 		step.setIcon(PicturesRes.getInstance().stepOver);
-		step.setText("Step");
 		step.setToolTipText("Step Over");
 		step.setBounds(xpos, ypos, width, height);
 		buttons.add(step);
 
 		xpos += width;
-		setpIn = new JButton("SI");
+		setpIn = new JButton();
 		setpIn.setIcon(PicturesRes.getInstance().stepInto);
 		setpIn.setToolTipText("Step Into");
 		buttons.add(setpIn);
 		setpIn.setBounds(xpos, ypos, width, height);
 
 		xpos += width;
-		setpOut = new JButton("SO");
+		setpOut = new JButton();
 		buttons.add(setpOut);
 		setpOut.setIcon(PicturesRes.getInstance().stepOut);
 		setpOut.setToolTipText("Step Out");
 		setpOut.setBounds(xpos, ypos, width, height);
 
 		xpos += width;
-		breakPoints = new JButton("BP");
-		buttons.add(breakPoints);
-		breakPoints.setBounds(xpos, ypos, width, height);
+		stop = new JButton();
+		stop.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				
+			}
+		});
+		stop.setIcon(PicturesRes.getInstance().stop);
+		buttons.add(stop);
+		stop.setBounds(xpos, ypos, width, height);
 
 		xpos += width;
 		jumpTo = new JLabel("JumpTo:");
 		buttons.add(jumpTo);
-		jumpTo.setBounds(xpos, ypos, width, height);
+		jumpTo.setBounds(xpos, ypos, 45, height);
 
-		xpos += width;
+		xpos += 45;
 		jumpDes = new JTextField();
 		jumpDes.addKeyListener(new KeyAdapter() {
 			public void keyPressed(final KeyEvent e) {
@@ -221,11 +224,8 @@ public class Simulator extends JFrame {
 	public void initizlizeMenu() {
 		int xpos = 0;
 		int width = 80, height = 25;
-
 		xpos += width;
-
 		xpos += width;
-
 		xpos += width;
 	}
 
