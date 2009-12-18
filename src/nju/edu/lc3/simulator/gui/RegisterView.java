@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 
 public class RegisterView extends JPanel{
-	RegisterShowValue[] registers;
+	ShowValue[] registers;
 	public RegisterView(){
 		
 		
