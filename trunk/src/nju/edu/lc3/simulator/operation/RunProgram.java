@@ -15,6 +15,10 @@ public class RunProgram {
 	public void runOneStep()
 	{
 		int op = fetch();
+		
+		int temp = RegisterModel.getRegister("PSR").getValue();
+		RegisterModel.getRegister("PSR").setValue(temp|32768);
+		RegisterModel.getRegister("IR").setValue(op);
 		BitInstruction ins = decode(op);
 		ins.execute();
 	}

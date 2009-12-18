@@ -115,7 +115,7 @@ public class Simulator extends JFrame {
 	
 	public void rePaintAll()
 	{
-		for(RegisterShowValue reg :regView.registers)
+		for(ShowValue reg :regView.registers)
 		{
 			reg.rePaint();
 		}

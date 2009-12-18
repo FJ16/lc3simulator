@@ -26,5 +26,6 @@ public class MachineRun {
 			int temp = RegisterModel.getRegister("PSR").getValue();
 			RegisterModel.getRegister("PSR").setValue(temp|4);
 		}
+		
 	}
 }
