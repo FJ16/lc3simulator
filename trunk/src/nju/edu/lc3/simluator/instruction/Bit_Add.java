@@ -31,17 +31,18 @@ public class Bit_Add extends BitInstruction{
 	
 	public Bit_Add(char[] bit)
 	{
+		
 		this.bit = bit;
-		dr = BitUtil.bitarrayToInt(bit, 4, 3,false);
-		sr1 = BitUtil.bitarrayToInt(bit, 7, 3,false);
+		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
+		sr1 = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		if(bit[10]=='0')
 		{
-			sr2 = BitUtil.bitarrayToInt(bit, 13, 3,false);
+			sr2 = BitUtil.bitArrayToInt(bit, 13, 3,false);
 			type =0;
 		}
 		else
 		{
-			imm5 = BitUtil.bitarrayToInt(bit, 11, 5,true);
+			imm5 = BitUtil.bitArrayToInt(bit, 11, 5,true);
 			type =1;
 		}
 	}

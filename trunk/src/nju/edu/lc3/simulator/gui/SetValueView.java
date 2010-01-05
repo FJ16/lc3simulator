@@ -2,6 +2,7 @@ package nju.edu.lc3.simulator.gui;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -17,15 +18,11 @@ import nju.edu.lc3.util.BitUtil;
 
 public class SetValueView extends JDialog {
 	JLabel description;
-
 	JLabel location;
 	JTextField loca;
-
 	JLabel value;
 	JTextField val;
-
 	String destination;
-
 	JButton ok;
 	JButton apply;
 	JButton cancel;
@@ -79,6 +76,10 @@ public class SetValueView extends JDialog {
 	}
 
 	private void initialize() {
+		Point l = new Point();
+		l.setLocation(this.getParent().getLocation().getX()+this.getParent().getWidth(),
+				this.getParent().getLocation().getY());
+		this.setLocation(l);
 
 		int pos = 2;
 		Container cp = this.getContentPane();

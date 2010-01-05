@@ -12,8 +12,8 @@ public class Bit_Sti extends BitInstruction{
 	public Bit_Sti(char[] bit)
 	{
 		this.bit = bit;
-		sr = BitUtil.bitarrayToInt(bit, 4, 3,false);
-		PCoffset9 = BitUtil.bitarrayToInt(bit, 7, 9,true);
+		sr = BitUtil.bitArrayToInt(bit, 4, 3,false);
+		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9,true);
 	}
 	@Override
 	public boolean execute() {

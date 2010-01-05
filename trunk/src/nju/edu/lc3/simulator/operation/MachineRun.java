@@ -1,6 +1,7 @@
 package nju.edu.lc3.simulator.operation;
 
 import nju.edu.lc3.simulator.gui.RegisterModel;
+import nju.edu.lc3.util.BitUtil;
 
 public class MachineRun {
 	
@@ -27,5 +28,39 @@ public class MachineRun {
 			RegisterModel.getRegister("PSR").setValue(temp|4);
 		}
 		
+		int temp = RegisterModel.getRegister("PSR").getValue();
+		temp&=7;
+		RegisterModel.getRegister("CC").setValue(temp);
+		
+	}
+	
+	public void setMachineMode(boolean mode)
+	{
+		if(mode)
+		{
+			int temp = RegisterModel.getRegister("PSR").getValue();
+			int value = BitUtil.setBits(temp, 0, 1, 0);
+			RegisterModel.getRegister("PSR").setValue(value);
+		}
+		else
+		{
+			int temp = RegisterModel.getRegister("PSR").getValue();
+			int value = BitUtil.setBits(temp, 0, 1, 1);
+			RegisterModel.getRegister("PSR").setValue(value);
+			
+		}
+	}
+	
+	public void setPriority(int level)
+	{
+		int temp = RegisterModel.getRegister("PSR").getValue();
+		int value = BitUtil.setBits(temp, 5, 3, level);
+		RegisterModel.getRegister("PSR").setValue(value);
+	}
+	
+	public static void main(String[] args)
+	{
+		MachineRun.getInstance().setMachineMode(true);
+		MachineRun.getInstance().setPriority(0);
 	}
 }

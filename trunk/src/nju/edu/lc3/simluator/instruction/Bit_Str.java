@@ -13,9 +13,9 @@ public class Bit_Str extends BitInstruction{
 	public Bit_Str(char[] bit)
 	{
 		this.bit = bit;
-		sr = BitUtil.bitarrayToInt(bit, 4, 3,false);
-		baseR = BitUtil.bitarrayToInt(bit, 7, 3,false);
-		offset6 = BitUtil.bitarrayToInt(bit, 10, 6,true);
+		sr = BitUtil.bitArrayToInt(bit, 4, 3,false);
+		baseR = BitUtil.bitArrayToInt(bit, 7, 3,false);
+		offset6 = BitUtil.bitArrayToInt(bit, 10, 6,true);
 	}
 	@Override
 	public boolean execute() {

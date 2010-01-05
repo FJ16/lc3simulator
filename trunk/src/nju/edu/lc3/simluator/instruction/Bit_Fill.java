@@ -17,7 +17,7 @@ public class Bit_Fill extends BitInstruction{
 	@Override
 	public String getSource() {
 		// TODO Auto-generated method stub
-		return ".FILL "+BitUtil.bitarrayToInt(bit, 0, 16, true);
+		return ".FILL "+BitUtil.bitArrayToInt(bit, 0, 16, true);
 	}
 
 	@Override

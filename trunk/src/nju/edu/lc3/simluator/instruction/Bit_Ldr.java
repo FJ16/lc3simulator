@@ -14,9 +14,9 @@ public class Bit_Ldr extends BitInstruction{
 	public Bit_Ldr(char[] bit)
 	{
 		this.bit = bit;
-		dr = BitUtil.bitarrayToInt(bit, 4, 3,false);
-		baseR = BitUtil.bitarrayToInt(bit, 7, 3,false);
-		offset6 = BitUtil.bitarrayToInt(bit, 10, 6,true);
+		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
+		baseR = BitUtil.bitArrayToInt(bit, 7, 3,false);
+		offset6 = BitUtil.bitArrayToInt(bit, 10, 6,true);
 	}
 	@Override
 	public boolean execute() {

@@ -17,7 +17,7 @@ public class RegisterModel {
 		registerModel.add(new RegisterModel("PC",12288));
 		registerModel.add(new RegisterModel("IR",0));
 		registerModel.add(new RegisterModel("PSR",0));
-		registerModel.add(new RegisterModel("CC",0));
+		registerModel.add(new RegisterModel("CC",2));
 	}
 	
 	public static RegisterModel getRegister(String name)
