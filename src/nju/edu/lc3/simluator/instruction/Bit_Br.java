@@ -20,7 +20,7 @@ public class Bit_Br extends BitInstruction{
 			z=true;
 		if(bit[6]=='1')
 			p=true;
-		PCoffset9 = BitUtil.bitarrayToInt(bit, 7, 9,true);
+		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9,true);
 	}
 
 	@Override

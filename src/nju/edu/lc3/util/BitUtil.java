@@ -17,14 +17,31 @@ public class BitUtil {
 
 	public static String toBinString(int value) {
 		String temp = Integer.toBinaryString(value);
-		for (; temp.length() < 16; temp = "0" + temp)
-			;
+		for (; temp.length() < 16; temp = "0" + temp);
 
 		return temp;
+	}
+	
+	public static int setBits(int source, int from, int length,int value)
+	{
+		
+		char[] tmp1 = intToBitArray(source,16);
+		char[] tmp2 = intToBitArray(value,length);
+		for(int i = 0;i<length;i++)
+		{
+			tmp1[from+i] = tmp2[i];
+		}
+		int result = bitArrayToInt(tmp1,0,16,true);
+		
+		return result;
 	}
 
 	public static String toHexString(int value) {
 		String temp = Integer.toHexString(value);
+		if(temp.length()>4)
+		{
+			temp = temp.substring(temp.length()-4);
+		}
 		for (; temp.length() < 4; temp = "0" + temp)
 			;
 		temp = "0x" + temp;
@@ -37,8 +54,25 @@ public class BitUtil {
 		result = Integer.valueOf(subString, 16);
 		return result;
 	}
+	
+	public static char[] intToBitArray(int source,int length)
+	{
+		char[] result = new char[length];
+		String temp = Integer.toBinaryString(source);
+		for(int i=0;i<length;i++)
+		{
+			temp = "0"+temp;
+		}
+		for(int i =1 ;i<=length;i++)
+		{
+			result[length-i] = temp.charAt(temp.length()-i);
+		}
+		
+		
+		return result;
+	}
 
-	public static int bitarrayToInt(char[] bit, int start, int length,boolean isSigned) {
+	public static int bitArrayToInt(char[] bit, int start, int length,boolean isSigned) {
 		if(!isSigned){
 			char[] temp = new char[length];
 			for (int i = start; i < start+length; i++) {
@@ -80,10 +114,10 @@ public class BitUtil {
 	{
 		char[] bit1 = {'0','0','1','1'};
 		char[] bit2 = {'1','0','1','1'};
-		System.out.println(BitUtil.bitarrayToInt(bit1, 0, 4, false));
-		System.out.println(BitUtil.bitarrayToInt(bit1, 0, 4, true));
-		System.out.println(BitUtil.bitarrayToInt(bit2, 0, 4, false));
-		System.out.println(BitUtil.bitarrayToInt(bit2, 0, 4, true));
+		System.out.println(BitUtil.bitArrayToInt(bit1, 0, 4, false));
+		System.out.println(BitUtil.bitArrayToInt(bit1, 0, 4, true));
+		System.out.println(BitUtil.bitArrayToInt(bit2, 0, 4, false));
+		System.out.println(BitUtil.bitArrayToInt(bit2, 0, 4, true));
 	}
 	
 	private static int opp_value(char i)

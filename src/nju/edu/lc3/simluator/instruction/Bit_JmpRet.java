@@ -13,7 +13,7 @@ public class Bit_JmpRet extends BitInstruction{
 	public Bit_JmpRet(char[] bit)
 	{
 		this.bit=bit;
-		baseR = BitUtil.bitarrayToInt(bit, 7, 3,false);
+		baseR = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		if(baseR==7)
 			type=1;
 		else
@@ -39,10 +39,10 @@ public class Bit_JmpRet extends BitInstruction{
 
 	@Override
 	public boolean validate() {
-		int temp = BitUtil.bitarrayToInt(bit, 4, 3,false);
+		int temp = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		if(temp!=0)
 			return false;
-		temp = BitUtil.bitarrayToInt(bit, 10, 6,true);
+		temp = BitUtil.bitArrayToInt(bit, 10, 6,true);
 		if(temp!=0)
 			return false;
 		return true;

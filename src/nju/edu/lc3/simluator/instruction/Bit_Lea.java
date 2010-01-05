@@ -12,8 +12,8 @@ public class Bit_Lea extends BitInstruction{
 	public Bit_Lea(char[] bit)
 	{
 		this.bit= bit;
-		dr = BitUtil.bitarrayToInt(bit, 4, 3, false);
-		PCoffset9 = BitUtil.bitarrayToInt(bit, 7, 9, true);
+		dr = BitUtil.bitArrayToInt(bit, 4, 3, false);
+		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9, true);
 	}
 
 	@Override

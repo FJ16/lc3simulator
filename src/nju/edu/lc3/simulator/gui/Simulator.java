@@ -95,7 +95,6 @@ public class Simulator extends JFrame {
 		buttons.setBounds(0, ypos, this.getWidth(), 30);
 		buttons.setBorder(BorderFactory.createRaisedBevelBorder());
 		initializeButtons();
-
 		ypos += buttons.getHeight() + 5;
 
 		regView = new RegisterView();
@@ -160,7 +159,7 @@ public class Simulator extends JFrame {
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
 				RunProgram run = new RunProgram();
-				run.runOneStep();
+				run.runInto();
 				rePaintAll();
 			}
 		});

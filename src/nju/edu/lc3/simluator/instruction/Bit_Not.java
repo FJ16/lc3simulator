@@ -11,8 +11,8 @@ public class Bit_Not extends BitInstruction{
 	public Bit_Not(char[] bit)
 	{
 		this.bit = bit;
-		dr = BitUtil.bitarrayToInt(bit, 4, 3, false);
-		sr = BitUtil.bitarrayToInt(bit, 7, 3, false);
+		dr = BitUtil.bitArrayToInt(bit, 4, 3, false);
+		sr = BitUtil.bitArrayToInt(bit, 7, 3, false);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class Bit_Rti extends BitInstruction{
 
 	@Override
 	public boolean validate() {
-		if(BitUtil.bitarrayToInt(bit, 4, 12, false)!=0)
+		if(BitUtil.bitArrayToInt(bit, 4, 12, false)!=0)
 			return false;
 		return true;
 	}

@@ -1,31 +1,29 @@
 package nju.edu.lc3.simulator.gui;
+
 import java.awt.Color;
 
 import javax.swing.JLabel;
 
 import nju.edu.lc3.util.BitUtil;
 
+public class CCRegisterShowValue extends RegisterShowValue {
 
-public class RegisterShowValue extends ShowValue{
-	RegisterModel register;
-	
-	public RegisterShowValue(String name){
-		super(name,0);
+	public CCRegisterShowValue(String name) {
+		super(name);
 		
-		super.setValue(register.getValue());
 	}
 	
-	public void setValue(int value)
-	{
-		this.register.setValue(value);
-		super.setValue(value);
-	}
 	public void addDescription(){
 		register = RegisterModel.getRegister(name);
-		String hexString = BitUtil.toHexString(register.getValue());
-		
-		
-		des=new JLabel(name+"  "+hexString+" "+register.getValue());
+		int temp = register.getValue();
+		String cc  = "";
+		if((temp&4)>0)
+			cc+="N";
+		if((temp&2)>0)
+			cc+="Z";
+		if((temp&1)>0)
+			cc+="P";
+		des=new JLabel(name+"  "+cc);
 		this.setLayout(null);
 		this.setBackground(Color.white);
 		this.setSize(100, 20);
@@ -34,4 +32,5 @@ public class RegisterShowValue extends ShowValue{
 		des.setBounds(0, 0, this.getWidth(), this.getHeight());
 		des.setBackground(Color.white);
 	}
+
 }

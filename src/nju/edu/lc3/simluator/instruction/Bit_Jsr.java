@@ -14,12 +14,12 @@ public class Bit_Jsr extends BitInstruction{
 		if(bit[4]=='1')
 		{
 			type=1;
-			PCoffset11 = BitUtil.bitarrayToInt(bit, 5, 11,true);
+			PCoffset11 = BitUtil.bitArrayToInt(bit, 5, 11,true);
 		}
 		else
 		{
 			type=0;
-			baseR=BitUtil.bitarrayToInt(bit, 7, 3,false);
+			baseR=BitUtil.bitArrayToInt(bit, 7, 3,false);
 		}
 	}
 
@@ -57,10 +57,10 @@ public class Bit_Jsr extends BitInstruction{
 	@Override
 	public boolean validate() {
 		if(bit[5]=='0'){
-			int temp=BitUtil.bitarrayToInt(bit, 6, 2,false);
+			int temp=BitUtil.bitArrayToInt(bit, 6, 2,false);
 			if(temp!=0)
 				return false;
-			temp = BitUtil.bitarrayToInt(bit, 10, 6,false);
+			temp = BitUtil.bitArrayToInt(bit, 10, 6,false);
 			return false;
 		}
 		return true;

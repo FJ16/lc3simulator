@@ -11,16 +11,45 @@ public class RunProgram {
 	{
 		
 	}
+	
 
+	
+	private void setIRRegister(int op)
+	{
+		RegisterModel.getRegister("IR").setValue(op);
+	}
+
+	public void runInto()
+	{
+		int op = fetch(); //获取操作码
+		setIRRegister(op);//设置IR寄存器
+		BitInstruction ins = decode(op); //解码
+		MachineRun.getInstance().setMachineMode(ins.isSystemMode); //设置机器模式
+		ins.execute();         //执行代码
+	}
+	
 	public void runOneStep()
 	{
-		int op = fetch();
-		
-		int temp = RegisterModel.getRegister("PSR").getValue();
-		RegisterModel.getRegister("PSR").setValue(temp|32768);
-		RegisterModel.getRegister("IR").setValue(op);
-		BitInstruction ins = decode(op);
-		ins.execute();
+		int pcValue = RegisterModel.getRegister("PC").getValue();
+		do
+		{
+			runInto();
+		}
+		while(RegisterModel.getRegister("PC").getValue()==pcValue);
+			
+	}
+	
+	public void runOut()
+	{
+		int op;
+		do{
+			op = fetch(); //获取操作码
+			setIRRegister(op);//设置IR寄存器
+			BitInstruction ins = decode(op); //解码
+			MachineRun.getInstance().setMachineMode(ins.isSystemMode); //设置机器模式
+			ins.execute();         //执行代码
+		}
+		while(op!=49600);
 	}
 	
 	private int fetch()
@@ -104,7 +133,7 @@ public class RunProgram {
 	
 	private int getOperation(char[] bit)
 	{
-		return BitUtil.bitarrayToInt(bit, 0, 4,false);
+		return BitUtil.bitArrayToInt(bit, 0, 4,false);
 	}
 	public static void main(String[] args)
 	{

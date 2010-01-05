@@ -11,7 +11,7 @@ public class Bit_Trap extends BitInstruction{
 	{
 		this.bit = bit;
 		
-		trapvect8 = BitUtil.bitarrayToInt(bit, 8, 8,true);
+		trapvect8 = BitUtil.bitArrayToInt(bit, 8, 8,true);
 	}
 	@Override
 	public boolean execute() {
@@ -27,7 +27,7 @@ public class Bit_Trap extends BitInstruction{
 
 	@Override
 	public boolean validate() {
-		int temp = BitUtil.bitarrayToInt(bit, 4, 4, false);
+		int temp = BitUtil.bitArrayToInt(bit, 4, 4, false);
 		if(temp!=0)
 			return false;
 		return true;
