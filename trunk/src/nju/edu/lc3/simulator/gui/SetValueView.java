@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
@@ -108,6 +110,15 @@ public class SetValueView extends JDialog {
 		value.setBounds(5, pos, 100, 50);
 
 		val = new JTextField(10);
+		val.addKeyListener(new KeyAdapter() {
+			public void keyPressed(final KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					closeWindow();
+				}
+			}
+		});
+		
 		cp.add(val);
 		val.setDocument(new MyDocument(10));
 		val.setBounds(100, pos + 15, 100, 20);

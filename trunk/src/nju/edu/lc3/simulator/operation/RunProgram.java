@@ -1,8 +1,8 @@
 package nju.edu.lc3.simulator.operation;
 
-import nju.edu.lc3.simluator.instruction.*;
 import nju.edu.lc3.simulator.gui.MemoryModel;
 import nju.edu.lc3.simulator.gui.RegisterModel;
+import nju.edu.lc3.simulator.instruction.*;
 import nju.edu.lc3.util.BitUtil;
 import nju.edu.lc3.word.Bits;
 

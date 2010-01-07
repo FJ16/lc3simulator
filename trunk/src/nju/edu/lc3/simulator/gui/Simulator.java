@@ -29,7 +29,7 @@ public class Simulator extends JFrame {
 	JButton open, run, step,setpIn, setpOut, stop, insBreak;
 	JLabel jumpTo;
 	JTextField jumpDes;
-	IOConsole io;
+	public IOConsole io;
 
 	public Simulator() {
 

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
-import nju.edu.lc3.simluator.instruction.BitInstruction;
+import nju.edu.lc3.simulator.instruction.BitInstruction;
 import nju.edu.lc3.simulator.operation.Translator;
 import nju.edu.lc3.util.BitUtil;
 
