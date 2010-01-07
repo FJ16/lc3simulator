@@ -9,7 +9,7 @@ import javax.swing.text.PlainDocument;
 
 
 public class IOConsole extends JFrame{
-	JTextArea text;
+	public JTextArea text;
 	boolean isReadable;
 	
 	class  MyDocument extends PlainDocument{

@@ -1,6 +1,12 @@
 package nju.edu.lc3.simulator.gui;
 import javax.swing.UIManager;
-public class Console {
+public class Application {
+	
+	private static Simulator instance;
+	public static Simulator getInstance()
+	{
+		return instance;
+	}
 	public static void main(String[] args){
 
 		try{
@@ -11,7 +17,7 @@ public class Console {
 			ee.printStackTrace();
 		}
 
-		new Simulator();
+		instance = new Simulator();
 
 	}
 }
