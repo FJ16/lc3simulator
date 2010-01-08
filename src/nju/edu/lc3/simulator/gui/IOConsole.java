@@ -1,57 +1,73 @@
 package nju.edu.lc3.simulator.gui;
+
 import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Console;
 
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.text.PlainDocument;
 
-
-public class IOConsole extends JFrame{
+public class IOConsole extends JFrame {
 	public JTextArea text;
 	boolean isReadable;
-	
-	class  MyDocument extends PlainDocument{
-		public MyDocument(){
-			
+
+	class MyDocument extends PlainDocument {
+		public MyDocument() {
+
 		}
 
-		public void insertString(int offset, String  mess, javax.swing.text.AttributeSet attributeSet)
-		throws  javax.swing.text.BadLocationException{
-			if(read()){
+		public void insertString(int offset, String mess,
+				javax.swing.text.AttributeSet attributeSet)
+				throws javax.swing.text.BadLocationException {
+			if (read()) {
+
 				super.insertString(offset, mess, attributeSet);
 			}
 		}
 	}
-	public IOConsole(){
-		this.setSize(600,400);
-		Container cp=this.getContentPane();
-		text=new JTextArea();
+
+	public IOConsole() {
+		this.setSize(600, 400);
+		Container cp = this.getContentPane();
+		text = new JTextArea();
+
 		cp.setLayout(null);
 		cp.add(text);
 		text.setBounds(0, 0, this.getWidth(), this.getHeight());
 		text.setDocument(new MyDocument());
-		
+
 		this.setResizable(false);
 		this.setTitle("Simulator Console");
 		this.setVisible(true);
 		isReadable = false;
 	}
-	
-	public void setReadable(boolean isReadable)
-	{
+
+	public void setReadable(boolean isReadable) {
 		this.isReadable = isReadable;
 	}
-	
-	public boolean read(){
-		
+
+	public boolean read() {
+
 		return isReadable;
 	}
-	public void output(String mess){
-		
+
+	public void output(String mess) {
+
 	}
-	
-	protected void processWindowEvent(WindowEvent e){
+
+	protected void processWindowEvent(WindowEvent e) {
 	}
+
+	/*public static void main(String[] args) {
+		Console console;
+		char[] pwd;
+		if ((console = System.console()) != null
+				&&(pwd = console
+						.readPassword("[%s]", "Please Enter Password:")) != null) {
+			System.out.println(String.valueOf(pwd));
+		}
+	}*/
+
 }

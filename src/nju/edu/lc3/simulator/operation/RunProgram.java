@@ -1,46 +1,76 @@
 package nju.edu.lc3.simulator.operation;
 
-import nju.edu.lc3.simulator.gui.MemoryModel;
-import nju.edu.lc3.simulator.gui.RegisterModel;
 import nju.edu.lc3.simulator.instruction.*;
+import nju.edu.lc3.simulator.model.MemoryModel;
+import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 import nju.edu.lc3.word.Bits;
 
 public class RunProgram {
-	public void runAll()
+	private static RunProgram instance = new RunProgram();
+	
+	Thread thread ;
+	public static RunProgram getInstance()
+	{
+		return instance;
+	}
+	private RunProgram()
 	{
 		
 	}
+	
+	public void runAll()
+	{
+		
+		RegisterModel.getRegister("MCR").setValue(32768);
+		int i=0;
+		while(RegisterModel.getRegister("MCR").getValue()!=0&&RegisterModel.getRegister("PC").getValue()<65535)
+		{
+			runInto();
+			//System.out.println(i++);
+			
+		}
+		MachineRun.getInstance().gotoPCLine();
+		
+	}
+	
+
 	
 
 	
 	private void setIRRegister(int op)
 	{
 		RegisterModel.getRegister("IR").setValue(op);
+		
 	}
 
 	public void runInto()
 	{
+		RegisterModel.getRegister("MCR").setValue(32768);
 		int op = fetch(); //获取操作码
 		setIRRegister(op);//设置IR寄存器
 		BitInstruction ins = decode(op); //解码
 		MachineRun.getInstance().setMachineMode(ins.isSystemMode); //设置机器模式
 		ins.execute();         //执行代码
+		
 	}
 	
 	public void runOneStep()
 	{
+		RegisterModel.getRegister("MCR").setValue(32768);
 		int pcValue = RegisterModel.getRegister("PC").getValue();
 		do
 		{
 			runInto();
 		}
 		while(RegisterModel.getRegister("PC").getValue()==pcValue);
+		
 			
 	}
 	
 	public void runOut()
 	{
+		RegisterModel.getRegister("MCR").setValue(32768);
 		int op;
 		do{
 			op = fetch(); //获取操作码
@@ -49,7 +79,8 @@ public class RunProgram {
 			MachineRun.getInstance().setMachineMode(ins.isSystemMode); //设置机器模式
 			ins.execute();         //执行代码
 		}
-		while(op!=49600);
+		while(op!=49600&&RegisterModel.getRegister("MCR").getValue()!=0&&RegisterModel.getRegister("PC").getValue()<65535);
+		MachineRun.getInstance().gotoPCLine();
 	}
 	
 	private int fetch()

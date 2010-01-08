@@ -1,4 +1,4 @@
-package nju.edu.lc3.simulator.gui;
+package nju.edu.lc3.simulator.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ public class RegisterModel {
 	private String name;
 	private int value;
 	
-	private static List<RegisterModel> registerModel = new ArrayList<RegisterModel>(12);
+	private static List<RegisterModel> registerModel = new ArrayList<RegisterModel>(13);
 	static 
 	{
 		for(int i =0;i<8;i++)
@@ -18,6 +18,7 @@ public class RegisterModel {
 		registerModel.add(new RegisterModel("IR",0));
 		registerModel.add(new RegisterModel("PSR",0));
 		registerModel.add(new RegisterModel("CC",2));
+		registerModel.add(new RegisterModel("MCR",0));
 	}
 	
 	public static RegisterModel getRegister(String name)
