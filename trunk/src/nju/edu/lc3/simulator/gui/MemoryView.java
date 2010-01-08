@@ -6,10 +6,13 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
 
+import nju.edu.lc3.simulator.model.MemoryModel;
+
 
 public class MemoryView extends JPanel implements Scrollable{
+	public static final int MEMORY_SHOW_SIZE=28;
 	MemoryShowValue [] memory;
-	MyScrollBar scroll;
+	public MyScrollBar scroll;
 	public MemoryView(){
 		initialize();
 	}
@@ -23,7 +26,7 @@ public class MemoryView extends JPanel implements Scrollable{
 	}
 	public void addMemory(int address){
 		
-		memory=new MemoryShowValue[28];
+		memory=new MemoryShowValue[MEMORY_SHOW_SIZE];
 		for(int i=0;i<memory.length;i++){
 			memory[i]=MemoryShowValue.getMemoryShowValue(MemoryModel.getMemory(address+i));			
 			this.add(memory[i]);

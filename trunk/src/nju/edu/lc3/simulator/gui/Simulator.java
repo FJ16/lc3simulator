@@ -6,30 +6,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.PlainDocument;
 
+import nju.edu.lc3.simulator.operation.FileManager;
+import nju.edu.lc3.simulator.operation.MachineRun;
 import nju.edu.lc3.simulator.operation.RunProgram;
 import nju.edu.lc3.util.BitUtil;
 
 public class Simulator extends JFrame {
-	RegisterView regView;
-	MemoryView memView;
+	public IOConsole io;
+	public RegisterView regView;
+	public MemoryView memView;
+	
+	Thread thread;
 
 	JPanel buttons;
 	JButton open, run, step,setpIn, setpOut, stop, insBreak;
 	JLabel jumpTo;
 	JTextField jumpDes;
-	public IOConsole io;
+	
 
 	public Simulator() {
 
@@ -78,6 +89,14 @@ public class Simulator extends JFrame {
 		final JMenuItem newItemMenuItem_6 = new JMenuItem();
 		newItemMenuItem_6.setText("About");
 		helpMenu.add(newItemMenuItem_6);
+		
+		try {
+			FileManager.getInstance().loadOS();
+			this.repaint();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
 	}
 
 	public void initialize() {
@@ -108,7 +127,6 @@ public class Simulator extends JFrame {
 		memView.setBounds(0, ypos, memView.getWidth(), memView.getHeight());
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		this.setVisible(true);
 	}
 	
@@ -119,6 +137,7 @@ public class Simulator extends JFrame {
 			reg.rePaint();
 		}
 		memView.scroll();
+		memView.scroll.repaint();
 		
 	}
 
@@ -133,8 +152,34 @@ public class Simulator extends JFrame {
 		open = new JButton();
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
+				final JFileChooser fc = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("lsc file","lsc");
+				fc.setFileFilter(filter);
+				fc.setCurrentDirectory(new File("."));
+				int returnVal = fc.showOpenDialog(Simulator.this);
+				
+				if(returnVal==JFileChooser.CANCEL_OPTION)
+				{
+					return;
+				}
+				else if(returnVal==JFileChooser.APPROVE_OPTION)
+				{
+					
+					String file= fc.getSelectedFile().getPath();
+					try {
+						FileManager.getInstance().loadFile(file);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "·¢Éú´íÎó£¡","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
 
-				// System.out.println(io.text.getText());
+			
+
 			}
 		});
 		buttons.add(open);
@@ -147,7 +192,17 @@ public class Simulator extends JFrame {
 		run.setIcon(PicturesRes.getInstance().run);
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
-									
+				thread = new Thread(){
+					public void run(){
+						RunProgram run = RunProgram.getInstance();
+						run.runAll();
+						MachineRun.getInstance().gotoPCLine();
+						rePaintAll();
+					}
+					
+				};
+				thread.start();
+				
 			}
 		});
 		buttons.add(run);
@@ -158,8 +213,9 @@ public class Simulator extends JFrame {
 		step = new JButton();
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
-				RunProgram run = new RunProgram();
-				run.runInto();
+				RunProgram run = RunProgram.getInstance();
+				run.runOneStep();
+				MachineRun.getInstance().gotoPCLine();
 				rePaintAll();
 			}
 		});
@@ -174,6 +230,14 @@ public class Simulator extends JFrame {
 		setpIn.setToolTipText("Step Into");
 		buttons.add(setpIn);
 		setpIn.setBounds(xpos, ypos, width, height);
+		setpIn.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				RunProgram run = RunProgram.getInstance();
+				run.runInto();
+				MachineRun.getInstance().gotoPCLine();
+				rePaintAll();
+			}
+		});
 
 		xpos += width;
 		setpOut = new JButton();
@@ -181,12 +245,23 @@ public class Simulator extends JFrame {
 		setpOut.setIcon(PicturesRes.getInstance().stepOut);
 		setpOut.setToolTipText("Step Out");
 		setpOut.setBounds(xpos, ypos, width, height);
+		setpOut.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				RunProgram run = RunProgram.getInstance();
+				run.runOut();
+				MachineRun.getInstance().gotoPCLine();
+				rePaintAll();
+			}
+		});
 
 		xpos += width;
 		stop = new JButton();
 		stop.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
-				
+				if(thread!=null)
+					thread.stop();
+				MachineRun.getInstance().gotoPCLine();
+				rePaintAll();
 			}
 		});
 		stop.setIcon(PicturesRes.getInstance().stop);

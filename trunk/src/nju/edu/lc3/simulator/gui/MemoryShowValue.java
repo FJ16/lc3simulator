@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import nju.edu.lc3.simulator.instruction.BitInstruction;
+import nju.edu.lc3.simulator.model.MemoryModel;
+import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.simulator.operation.Translator;
 import nju.edu.lc3.util.BitUtil;
 

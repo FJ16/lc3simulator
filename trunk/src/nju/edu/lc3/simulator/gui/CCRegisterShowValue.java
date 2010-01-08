@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
 public class CCRegisterShowValue extends RegisterShowValue {

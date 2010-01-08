@@ -1,4 +1,4 @@
-package nju.edu.lc3.simulator.gui;
+package nju.edu.lc3.simulator.model;
 
 import java.util.ArrayList;
 import java.util.List;
