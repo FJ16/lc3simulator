@@ -12,15 +12,21 @@ public class MachineRun {
 		return instance;
 	}
 
-	public void setcc(int value) {
+	public void setcc(int pValue) {
+		int value =0;
+		char[] bits = BitUtil.intToBitArray(pValue, 16);
+		value = BitUtil.bitArrayToInt(bits, 0, 16, true);
 		if (value == 0) {
 			int temp = RegisterModel.getRegister("PSR").getValue();
+			temp&=65528;
 			RegisterModel.getRegister("PSR").setValue(temp | 2);
 		} else if (value > 0) {
 			int temp = RegisterModel.getRegister("PSR").getValue();
+			temp&=65528;
 			RegisterModel.getRegister("PSR").setValue(temp | 1);
 		} else if (value < 0) {
 			int temp = RegisterModel.getRegister("PSR").getValue();
+			temp&=65528;
 			RegisterModel.getRegister("PSR").setValue(temp | 4);
 		}
 
