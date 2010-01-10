@@ -58,12 +58,16 @@ public class RunProgram {
 	public void runOneStep()
 	{
 		RegisterModel.getRegister("MCR").setValue(32768);
-		int pcValue = RegisterModel.getRegister("PC").getValue();
-		do
+		int op = fetch(); //获取操作码
+		setIRRegister(op);//设置IR寄存器
+		BitInstruction ins = decode(op); //解码
+		
+		MachineRun.getInstance().setMachineMode(ins.isSystemMode); //设置机器模式
+		ins.execute();         //执行代码
+		if(ins instanceof Bit_JmpRet)
 		{
-			runInto();
+			runOut();
 		}
-		while(RegisterModel.getRegister("PC").getValue()==pcValue);
 		
 			
 	}
@@ -166,9 +170,9 @@ public class RunProgram {
 	{
 		return BitUtil.bitArrayToInt(bit, 0, 4,false);
 	}
-	public static void main(String[] args)
+/*	public static void main(String[] args)
 	{
 		RunProgram test = new RunProgram();
 		test.decode(7192);
-	}
+	}*/
 }
