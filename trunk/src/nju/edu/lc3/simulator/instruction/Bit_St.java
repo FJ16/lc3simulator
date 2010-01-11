@@ -1,5 +1,7 @@
 package nju.edu.lc3.simulator.instruction;
 
+import javax.swing.text.BadLocationException;
+
 import nju.edu.lc3.simulator.gui.Application;
 import nju.edu.lc3.simulator.model.MemoryModel;
 import nju.edu.lc3.simulator.model.RegisterModel;
@@ -24,7 +26,18 @@ public class Bit_St extends BitInstruction{
 		MemoryModel.getMemory(address).setValue(value);
 		if(address == 65030) //Èç¹ûÊÇDisplay data register Memory map
 		{
-			Application.getInstance().io.text.append(value+"");
+			char code = (char)(RegisterModel.getRegister(sr).getValue());
+			
+			Application.getInstance().io.isPrintable=true;
+			try {
+				Application.getInstance().io.text.getDocument().
+				insertString(Application.getInstance().io.text.getDocument().
+						getEndPosition().getOffset(), code+"", null);
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Application.getInstance().io.isPrintable=false;
 		}
 		return true;
 	}

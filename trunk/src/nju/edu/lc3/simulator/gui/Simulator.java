@@ -101,7 +101,7 @@ public class Simulator extends JFrame {
 
 	public void initialize() {
 		this.setResizable(true);
-		this.setSize(405, 780);
+		this.setSize(405, 700);
 		this.setResizable(false);
 		this.setTitle("LC3 Simulator");
 		Container cp = this.getContentPane();
@@ -118,7 +118,7 @@ public class Simulator extends JFrame {
 
 		regView = new RegisterView();
 		cp.add(regView);
-		regView.setBounds(10, 33, regView.getWidth(), 87);
+		regView.setBounds(0, 36, regView.getWidth(), 82);
 
 		ypos += regView.getHeight();
 

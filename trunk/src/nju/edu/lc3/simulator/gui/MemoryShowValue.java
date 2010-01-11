@@ -18,6 +18,13 @@ public class MemoryShowValue extends ShowValue{
 	private JLabel  state;
 	int address;
 	MemoryModel memoryModel;
+	BitInstruction ins;
+	public BitInstruction getIns()
+	{
+		if(ins==null)
+			ins = Translator.decode(value);
+		return ins;
+	}
 	//static int CURRENT_POINT=3000;
 
 	private static MemoryModel unique;//the ip can only point to one address at one time.
@@ -34,7 +41,7 @@ public class MemoryShowValue extends ShowValue{
 		this.address = memory.getAddress();
 		this.setLayout(null);
 		this.setBackground(Color.white);
-		this.setSize(370,20);
+		this.setSize(370,18);
 		this.addDescription();
 
 		state=new JLabel();
@@ -67,7 +74,7 @@ public class MemoryShowValue extends ShowValue{
 		String temp=Integer.toHexString(address);
 		for(;temp.length()<4;temp="0"+temp);
 		
-		BitInstruction ins = Translator.decode(value);
+		ins = Translator.decode(value);
 		String op=ins.getSource();//×ª»¯³É»ã±à
 		int value = MemoryModel.getMemory(address).getValue();
 		String binValue = BitUtil.toBinString(value);

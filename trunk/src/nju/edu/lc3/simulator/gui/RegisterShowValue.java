@@ -24,12 +24,10 @@ public class RegisterShowValue extends ShowValue{
 	public void addDescription(){
 		register = RegisterModel.getRegister(name);
 		String hexString = BitUtil.toHexString(register.getValue());
-		
-		
 		des=new JLabel(name+"  "+hexString+" "+register.getValue());
 		this.setLayout(null);
 		this.setBackground(Color.white);
-		this.setSize(100, 20);
+		this.setSize(120, 18);
 		//this.setBorder(BorderFactory.createLineBorder(Color.blue));
 		this.add(des);
 		des.setBounds(0, 0, this.getWidth(), this.getHeight());

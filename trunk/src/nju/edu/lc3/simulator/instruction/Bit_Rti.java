@@ -18,7 +18,7 @@ public class Bit_Rti extends BitInstruction{
 	@Override
 	public String getSource() {
 		// TODO Auto-generated method stub
-		return null;
+		return "RTI";
 	}
 
 	@Override

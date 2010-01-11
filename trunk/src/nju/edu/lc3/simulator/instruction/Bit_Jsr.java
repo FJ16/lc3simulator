@@ -56,7 +56,7 @@ public class Bit_Jsr extends BitInstruction{
 
 	@Override
 	public boolean validate() {
-		if(bit[5]=='0'){
+		if(bit[4]=='0'){
 			int temp=BitUtil.bitArrayToInt(bit, 6, 2,false);
 			if(temp!=0)
 				return false;

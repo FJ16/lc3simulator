@@ -28,11 +28,10 @@ public class Bit_Ldi extends BitInstruction{
 		RegisterModel.getRegister(dr).setValue(value);
 		MachineRun.getInstance().setcc(RegisterModel.getRegister(dr).getValue());
 		
-		if(address==65024) //如果加载的地址是KBSR的内存映射
+		if(address==65026) //如果加载的地址是KBDR的内存映射
 		{
-			Application.getInstance().io.setReadable(true);
+			MemoryModel.getMemory(65024).setValue(0);
 		}
-		
 		if(address==65534) //如果加载的地址是MCR的内存映射
 		{
 			RegisterModel.getRegister("MCR").setValue(0); //halt the mechine
