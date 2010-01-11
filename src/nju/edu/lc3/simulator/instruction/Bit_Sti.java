@@ -29,14 +29,16 @@ public class Bit_Sti extends BitInstruction{
 		{
 			char code = (char)(RegisterModel.getRegister(sr).getValue());
 			
-			Application.getInstance().io.setReadable(true);
+			Application.getInstance().io.isPrintable=true;
 			try {
-				Application.getInstance().io.text.getDocument().insertString(Application.getInstance().io.text.getDocument().getEndPosition().getOffset(), code+"", null);
+				Application.getInstance().io.text.getDocument().
+				insertString(Application.getInstance().io.text.getCaretPosition(), Character.toString(code), null);
+				Application.getInstance().io.text.setCaretPosition(Application.getInstance().io.text.getCaretPosition()+1);
 			} catch (BadLocationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Application.getInstance().io.setReadable(false);
+			Application.getInstance().io.isPrintable=false;
 		}
 		return true;
 	}

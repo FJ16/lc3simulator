@@ -28,6 +28,7 @@ public class SetValueView extends JDialog {
 	JButton ok;
 	JButton apply;
 	JButton cancel;
+	String formText;
 	
 	public int getValue()
 	{
@@ -38,6 +39,8 @@ public class SetValueView extends JDialog {
 		}
 		else
 		{
+			if(val.getText()=="")
+				result = 0;
 			result=Integer.parseInt(val.getText());
 		}
 		if (result>65535)
@@ -74,6 +77,7 @@ public class SetValueView extends JDialog {
 		initialize();
 		loca.setText(name);
 		val.setText(value+"");
+		formText = value +"";
 		this.setVisible(true);
 	}
 
@@ -161,6 +165,7 @@ public class SetValueView extends JDialog {
 
 	class Cancel implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			val.setText(formText);
 			closeWindow();
 		}
 	}
@@ -173,6 +178,7 @@ public class SetValueView extends JDialog {
 
 	class Apply implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			val.setText(formText);
 			closeWindow();
 		}
 	}

@@ -1,6 +1,5 @@
 package nju.edu.lc3.simulator.instruction;
 
-import nju.edu.lc3.simulator.gui.Application;
 import nju.edu.lc3.simulator.model.MemoryModel;
 import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.simulator.operation.MachineRun;
@@ -25,14 +24,11 @@ public class Bit_Ld extends BitInstruction{
 		int value = MemoryModel.getMemory(pc+PCoffset9).getValue();
 		RegisterModel.getRegister(dr).setValue(value);
 		MachineRun.getInstance().setcc(RegisterModel.getRegister(dr).getValue());
-		if(pc+PCoffset9==65024) //如果加载的地址是KBSR的内存映射
-		{
-			Application.getInstance().io.setReadable(true);
-		}
+		
 		
 		if(pc+PCoffset9==65026) //如果加载的地址是KBDR的内存映射
 		{
-			Application.getInstance().io.setReadable(false);
+			MemoryModel.getMemory(65024).setValue(0);
 		}
 		
 		if(pc+PCoffset9==65534) //如果加载的地址是MCR的内存映射
