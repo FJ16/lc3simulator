@@ -48,6 +48,7 @@ public class IOConsole extends JFrame {
 		super();
 		this.setSize(600,400);
 		this.setResizable(false);
+		this.setTitle("LC3 Console");
 		final JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		text = new JTextArea();
