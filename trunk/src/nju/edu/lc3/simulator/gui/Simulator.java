@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,8 +19,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.PlainDocument;
@@ -36,10 +36,10 @@ public class Simulator extends JFrame {
 	
 	Thread thread;
 
-	JPanel buttons;
+	JToolBar buttons;
 	JButton open, run, step,setpIn, setpOut, stop, insBreak;
 	JLabel jumpTo;
-	JTextField jumpDes;
+	JComboBox jumpDes;
 	
 
 	public Simulator() {
@@ -101,7 +101,7 @@ public class Simulator extends JFrame {
 
 	public void initialize() {
 		this.setResizable(true);
-		this.setSize(405, 700);
+		this.setSize(396, 700);
 		this.setResizable(false);
 		this.setTitle("LC3 Simulator");
 		Container cp = this.getContentPane();
@@ -109,9 +109,9 @@ public class Simulator extends JFrame {
 		cp.setBackground(Color.white);
 		int ypos = 0;
 		initizlizeMenu();
-		buttons = new JPanel();
+		buttons = new JToolBar();
 		cp.add(buttons);
-		buttons.setBounds(0, ypos, this.getWidth(), 30);
+		buttons.setBounds(0, 0, this.getWidth(), 30);
 		buttons.setBorder(BorderFactory.createRaisedBevelBorder());
 		initializeButtons();
 		ypos += buttons.getHeight() + 5;
@@ -153,7 +153,7 @@ public class Simulator extends JFrame {
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
 				final JFileChooser fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("lsc file","lsc");
+				FileFilter filter = new FileNameExtensionFilter("bin file","bin");
 				fc.setFileFilter(filter);
 				fc.setCurrentDirectory(new File("."));
 				int returnVal = fc.showOpenDialog(Simulator.this);
@@ -182,6 +182,7 @@ public class Simulator extends JFrame {
 
 			}
 		});
+		
 		buttons.add(open);
 		open.setIcon(PicturesRes.getInstance().open);
 		open.setToolTipText("Open File");
@@ -266,6 +267,7 @@ public class Simulator extends JFrame {
 		});
 		stop.setIcon(PicturesRes.getInstance().stop);
 		buttons.add(stop);
+		stop.setToolTipText("Stop");
 		stop.setBounds(xpos, ypos, width, height);
 
 		xpos += width;
@@ -274,27 +276,33 @@ public class Simulator extends JFrame {
 		jumpTo.setBounds(xpos, ypos, 45, height);
 
 		xpos += 45;
-		jumpDes = new JTextField();
-		jumpDes.addKeyListener(new KeyAdapter() {
+		jumpDes = new JComboBox();
+		jumpDes.addItem("x3000");
+		jumpDes.setEditable(true);
+		jumpDes.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
 			public void keyPressed(final KeyEvent e) {
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 					int address;
-					if (jumpDes.getText().indexOf('x') >= 0) {
-						address = BitUtil.toInt(jumpDes.getText());
+					String gotoLine = (String)jumpDes.getEditor().getItem();
+					if (gotoLine.indexOf('x') >= 0) {
+						address = BitUtil.toInt(gotoLine);
 					} else {
-						address = Integer.parseInt(jumpDes.getText());
+						address = Integer.parseInt(gotoLine);
 					}
 					memView.scroll.setValue(address);
+					jumpDes.insertItemAt(jumpDes.getEditor().getItem(),0);
 				}
 			}
 		});
-		jumpDes.setDocument(new MyDocument(8));
+		
+		//jumpDes.setDocument(new MyDocument(8));
 		buttons.add(jumpDes);
-		jumpDes.setBounds(xpos, ypos, 60, height);
+		jumpDes.setBounds(xpos, ypos+2, 60, height-5);
 		
 
 	}
 	
+
 	public void initizlizeMenu() {
 		int xpos = 0;
 		int width = 80, height = 25;

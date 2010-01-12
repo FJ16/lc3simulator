@@ -2,6 +2,9 @@ package nju.edu.lc3.simulator.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -17,7 +20,7 @@ public class MemoryShowValue extends ShowValue{
 	PicturesRes picRes = PicturesRes.getInstance();
 	private JLabel  state;
 	int address;
-	MemoryModel memoryModel;
+	
 	BitInstruction ins;
 	public BitInstruction getIns()
 	{
@@ -45,6 +48,20 @@ public class MemoryShowValue extends ShowValue{
 		this.addDescription();
 
 		state=new JLabel();
+		state.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(final MouseEvent e) {
+				
+				if(e.getClickCount()==2&&e.getButton()==MouseEvent.BUTTON1){
+					if(MemoryModel.getMemory(address).isBreakPoint())
+					{
+						MemoryShowValue.this.removeBreakPoint();
+					}
+					else{
+					MemoryShowValue.this.addBreakPoint();
+					}
+				}
+			}
+		});
 		setStatePic();
 	}
 	public void setValue(int value)
@@ -135,4 +152,7 @@ public class MemoryShowValue extends ShowValue{
 			MemoryShowValue.this.pointTo();
 		}
 	}
+	
+	
+
 }
