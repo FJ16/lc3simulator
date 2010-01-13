@@ -1,6 +1,7 @@
 package nju.edu.lc3.simulator.operation;
 
 import nju.edu.lc3.simulator.gui.Application;
+import nju.edu.lc3.simulator.gui.MemoryView;
 import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.util.BitUtil;
 
@@ -53,7 +54,7 @@ public class MachineRun {
 		int pc = RegisterModel.getRegister("PC").getValue();
 		int low = Application.getInstance().memView.scroll.getValue();
 		int high = Application.getInstance().memView.scroll.getValue()
-				+ Application.getInstance().memView.MEMORY_SHOW_SIZE;
+				+ MemoryView.MEMORY_SHOW_SIZE;
 		if (pc < low || pc >= high)
 			Application.getInstance().memView.scroll.setValue(pc);
 

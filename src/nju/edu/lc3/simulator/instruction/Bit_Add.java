@@ -29,10 +29,11 @@ public class Bit_Add extends BitInstruction{
 	}
 	
 	
-	public Bit_Add(char[] bit)
+	public Bit_Add(char[] bit,int address)
 	{
 		
 		this.bit = bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		sr1 = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		if(bit[10]=='0')

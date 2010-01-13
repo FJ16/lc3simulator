@@ -8,9 +8,10 @@ public class Bit_Not extends BitInstruction{
 	char[] opcode = {'1','0','0','1'};
 	int dr;
 	int sr;
-	public Bit_Not(char[] bit)
+	public Bit_Not(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3, false);
 		sr = BitUtil.bitArrayToInt(bit, 7, 3, false);
 	}

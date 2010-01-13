@@ -8,9 +8,10 @@ public class Bit_Jsr extends BitInstruction{
 	int type;//1:JSR 0:JSRR
 	int PCoffset11;
 	int baseR;
-	public Bit_Jsr(char[] bit)
+	public Bit_Jsr(char[] bit,int address)
 	{
 		this.bit =bit;
+		this.address = address;
 		if(bit[4]=='1')
 		{
 			type=1;
@@ -45,7 +46,8 @@ public class Bit_Jsr extends BitInstruction{
 		String result;
 		if(type==1)
 		{
-			result="JSR "+PCoffset11;
+			String des = Integer.toHexString(PCoffset11+address+1);
+			result="JSR x"+des.toUpperCase();
 		}
 		else
 		{

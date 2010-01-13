@@ -11,9 +11,10 @@ public class Bit_Br extends BitInstruction{
 	int PCoffset9;
 	
 	
-	public Bit_Br(char[] bit)
+	public Bit_Br(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		if(bit[4]=='1')
 			n=true;
 		if(bit[5]=='1')
@@ -50,7 +51,11 @@ public class Bit_Br extends BitInstruction{
 			result+="z";
 		if(p)
 			result+="p";
-		result=result+" "+PCoffset9;
+		String des = Integer.toHexString(PCoffset9+address+1);
+		
+		result=result+" x"+des.toUpperCase();
+		if(PCoffset9==0)
+			result="NOP";
 		return result;
 	}
 
