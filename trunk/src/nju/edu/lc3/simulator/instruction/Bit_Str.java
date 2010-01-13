@@ -10,9 +10,10 @@ public class Bit_Str extends BitInstruction{
 	int baseR;
 	int offset6;
 	
-	public Bit_Str(char[] bit)
+	public Bit_Str(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		sr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		baseR = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		offset6 = BitUtil.bitArrayToInt(bit, 10, 6,true);

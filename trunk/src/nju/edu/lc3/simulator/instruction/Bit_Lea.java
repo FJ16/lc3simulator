@@ -9,9 +9,10 @@ public class Bit_Lea extends BitInstruction{
 	int dr;
 	int PCoffset9;
 	
-	public Bit_Lea(char[] bit)
+	public Bit_Lea(char[] bit,int address)
 	{
 		this.bit= bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3, false);
 		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9, true);
 	}
@@ -27,8 +28,8 @@ public class Bit_Lea extends BitInstruction{
 
 	@Override
 	public String getSource() {
-		
-		return "LEA R"+dr+","+PCoffset9;
+		String des = Integer.toHexString(PCoffset9+address+1);
+		return "LEA R"+dr+",x"+des.toUpperCase();
 	}
 
 	@Override

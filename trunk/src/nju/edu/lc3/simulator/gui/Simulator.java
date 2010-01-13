@@ -2,6 +2,7 @@ package nju.edu.lc3.simulator.gui;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -19,7 +20,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.PlainDocument;
@@ -33,6 +36,8 @@ public class Simulator extends JFrame {
 	public IOConsole io;
 	public RegisterView regView;
 	public MemoryView memView;
+	public JLabel s2;
+	public JLabel s3;
 	
 	Thread thread;
 
@@ -100,8 +105,12 @@ public class Simulator extends JFrame {
 	}
 
 	public void initialize() {
+		Point l = new Point();
+		l.setLocation(620,0);
+			
+		this.setLocation(l);
 		this.setResizable(true);
-		this.setSize(396, 700);
+		this.setSize(396, 693);
 		this.setResizable(false);
 		this.setTitle("LC3 Simulator");
 		Container cp = this.getContentPane();
@@ -110,6 +119,7 @@ public class Simulator extends JFrame {
 		int ypos = 0;
 		initizlizeMenu();
 		buttons = new JToolBar();
+		buttons.setFloatable(false);
 		cp.add(buttons);
 		buttons.setBounds(0, 0, this.getWidth(), 30);
 		buttons.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -125,7 +135,35 @@ public class Simulator extends JFrame {
 		memView = new MemoryView();
 		cp.add(memView);
 		memView.setBounds(0, ypos, memView.getWidth(), memView.getHeight());
-
+		
+		ypos +=memView.getHeight();
+		JToolBar statusBar = new JToolBar();
+		statusBar.setLayout(null);
+		JLabel s1 = new JLabel("Ready");
+		s1.setBounds(2, 2, 40, 15);
+		statusBar.add(s1);
+		JSeparator sp = new JSeparator(SwingConstants.VERTICAL);
+		sp.setBounds(45, 0, 3, 30);
+		statusBar.add(sp);
+		
+		s2 = new JLabel("0 instructions exectued");
+		s2.setHorizontalAlignment(SwingConstants.RIGHT);
+		s2.setBounds(50, 2, 200, 15);
+		statusBar.add(s2);
+		
+		
+		s3 = new JLabel("Idle");
+		s3.setHorizontalAlignment(SwingConstants.RIGHT);
+		s3.setBounds(260, 2, 60, 15);
+		statusBar.add(s3);
+		JSeparator sp2 = new JSeparator(SwingConstants.VERTICAL);
+		sp2.setBounds(253, 0, 3, 30);
+		statusBar.add(sp2);
+		
+		statusBar.setBounds(0,ypos,396,30);
+		cp.add(statusBar);
+		statusBar.setFloatable(false);
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
@@ -214,10 +252,17 @@ public class Simulator extends JFrame {
 		step = new JButton();
 		step.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent arg0) {
-				RunProgram run = RunProgram.getInstance();
-				run.runOneStep();
-				MachineRun.getInstance().gotoPCLine();
-				rePaintAll();
+				thread = new Thread(){
+					public void run(){
+						RunProgram run = RunProgram.getInstance();
+						run.runOneStep();
+						MachineRun.getInstance().gotoPCLine();
+						rePaintAll();
+					}
+					
+				};
+				thread.start();
+				
 			}
 		});
 		step.setIcon(PicturesRes.getInstance().stepOver);
@@ -262,6 +307,7 @@ public class Simulator extends JFrame {
 				if(thread!=null)
 					thread.stop();
 				MachineRun.getInstance().gotoPCLine();
+				Application.getInstance().s3.setText("Idle");
 				rePaintAll();
 			}
 		});

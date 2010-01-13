@@ -3,6 +3,9 @@ package nju.edu.lc3.simulator.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import nju.edu.lc3.simulator.instruction.BitInstruction;
+import nju.edu.lc3.simulator.operation.Translator;
+
 public class MemoryModel {
 	
 	private static List<MemoryModel> memoryList = new ArrayList<MemoryModel>(65536);
@@ -18,6 +21,13 @@ public class MemoryModel {
 	private int value;
 	private String operation;
 	private String name;
+	private BitInstruction ins;
+	public BitInstruction getIns(boolean reset)
+	{
+		if(ins==null||reset)
+			ins = Translator.decode(value,address);
+		return ins;
+	}
 	
 	public static MemoryModel getMemory(int address)
 	{

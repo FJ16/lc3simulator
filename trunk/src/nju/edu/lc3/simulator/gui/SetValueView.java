@@ -41,6 +41,7 @@ public class SetValueView extends JDialog {
 		{
 			if(val.getText()=="")
 				result = 0;
+			else
 			result=Integer.parseInt(val.getText());
 		}
 		if (result>65535)

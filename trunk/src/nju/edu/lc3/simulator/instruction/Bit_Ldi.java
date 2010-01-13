@@ -1,10 +1,8 @@
 package nju.edu.lc3.simulator.instruction;
 
-import nju.edu.lc3.simulator.gui.Application;
 import nju.edu.lc3.simulator.model.MemoryModel;
 import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.simulator.operation.MachineRun;
-import nju.edu.lc3.simulator.operation.RunProgram;
 import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Ldi extends BitInstruction{
@@ -13,9 +11,10 @@ public class Bit_Ldi extends BitInstruction{
 	int dr;
 	int PCoffset9;
 	
-	public Bit_Ldi(char[] bit)
+	public Bit_Ldi(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9,true);
 	}
@@ -41,7 +40,8 @@ public class Bit_Ldi extends BitInstruction{
 
 	@Override
 	public String getSource() {
-		return "LDI R"+dr+","+PCoffset9;
+		String des = Integer.toHexString(PCoffset9+address+1);
+		return "LDI R"+dr+",x"+des.toUpperCase();
 	}
 
 	@Override

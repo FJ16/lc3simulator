@@ -21,13 +21,7 @@ public class MemoryShowValue extends ShowValue{
 	private JLabel  state;
 	int address;
 	
-	BitInstruction ins;
-	public BitInstruction getIns()
-	{
-		if(ins==null)
-			ins = Translator.decode(value);
-		return ins;
-	}
+
 	//static int CURRENT_POINT=3000;
 
 	private static MemoryModel unique;//the ip can only point to one address at one time.
@@ -91,12 +85,12 @@ public class MemoryShowValue extends ShowValue{
 		String temp=Integer.toHexString(address);
 		for(;temp.length()<4;temp="0"+temp);
 		
-		ins = Translator.decode(value);
+		BitInstruction ins = MemoryModel.getMemory(address).getIns(true);
 		String op=ins.getSource();//×ª»¯³É»ã±à
 		int value = MemoryModel.getMemory(address).getValue();
 		String binValue = BitUtil.toBinString(value);
 		String hexValue = BitUtil.toHexString(value);
-		des=new JLabel(temp+"   "+binValue+"   "+hexValue+"   "+op);	
+		des=new JLabel(temp.toUpperCase()+"   "+binValue+"   "+hexValue+"   "+op);	
 		this.add(des);
 		des.setBounds(30, 0, this.getWidth()-20, this.getHeight());
 	}

@@ -10,9 +10,10 @@ public class Bit_JmpRet extends BitInstruction{
 	int baseR;
 	
 	
-	public Bit_JmpRet(char[] bit)
+	public Bit_JmpRet(char[] bit,int address)
 	{
 		this.bit=bit;
+		this.address = address;
 		baseR = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		if(baseR==7)
 			type=1;

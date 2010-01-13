@@ -11,9 +11,10 @@ public class Bit_Ldr extends BitInstruction{
 	int baseR;
 	int offset6;
 	
-	public Bit_Ldr(char[] bit)
+	public Bit_Ldr(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		baseR = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		offset6 = BitUtil.bitArrayToInt(bit, 10, 6,true);

@@ -12,9 +12,10 @@ public class Bit_Sti extends BitInstruction{
 	int sr;
 	int PCoffset9;
 	
-	public Bit_Sti(char[] bit)
+	public Bit_Sti(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		sr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9,true);
 	}
@@ -30,10 +31,12 @@ public class Bit_Sti extends BitInstruction{
 			char code = (char)(RegisterModel.getRegister(sr).getValue());
 			
 			Application.getInstance().io.isPrintable=true;
+			Application.getInstance().io.text.append(Character.toString(code)+"");
+			/*Application.getInstance().io.text.getDocument().
+			insertString(Application.getInstance().io.text.getCaretPosition(), Character.toString(code), null);
+			Application.getInstance().io.text.setCaretPosition(Application.getInstance().io.text.getCaretPosition()+1);*/
 			try {
-				Application.getInstance().io.text.getDocument().
-				insertString(Application.getInstance().io.text.getCaretPosition(), Character.toString(code), null);
-				Application.getInstance().io.text.setCaretPosition(Application.getInstance().io.text.getCaretPosition()+1);
+				Application.getInstance().io.text.setCaretPosition(Application.getInstance().io.text.getLineEndOffset(Application.getInstance().io.text.getLineCount()-1));
 			} catch (BadLocationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -45,7 +48,8 @@ public class Bit_Sti extends BitInstruction{
 
 	@Override
 	public String getSource() {
-		return "STI R"+sr+","+PCoffset9;
+		String des = Integer.toHexString(PCoffset9+address+1);
+		return "STI R"+sr+",x"+des.toUpperCase();
 	}
 
 	@Override

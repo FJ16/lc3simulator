@@ -14,9 +14,10 @@ public class Bit_And extends BitInstruction {
 	
 	
 
-	public Bit_And(char[] bit)
+	public Bit_And(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		sr1 = BitUtil.bitArrayToInt(bit, 7, 3,false);
 		if(bit[10]=='0')

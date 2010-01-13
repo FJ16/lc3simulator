@@ -11,9 +11,10 @@ public class Bit_Ld extends BitInstruction{
 	int dr;
 	int PCoffset9;
 	
-	public Bit_Ld(char[] bit)
+	public Bit_Ld(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		dr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9,true);
 	}
@@ -41,7 +42,8 @@ public class Bit_Ld extends BitInstruction{
 
 	@Override
 	public String getSource() {
-		return "LD R"+dr+","+PCoffset9+"+PC";
+		String des = Integer.toHexString(PCoffset9+address+1);
+		return "LD R"+dr+",x"+des.toUpperCase();
 	}
 
 	@Override

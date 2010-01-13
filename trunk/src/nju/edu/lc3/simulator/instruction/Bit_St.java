@@ -12,9 +12,10 @@ public class Bit_St extends BitInstruction{
 	int sr;
 	int PCoffset9;
 	
-	public Bit_St(char[] bit)
+	public Bit_St(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 		sr = BitUtil.bitArrayToInt(bit, 4, 3,false);
 		PCoffset9 = BitUtil.bitArrayToInt(bit, 7, 9,true);
 	}
@@ -44,7 +45,8 @@ public class Bit_St extends BitInstruction{
 
 	@Override
 	public String getSource() {
-		return "ST R"+sr+","+PCoffset9;
+		String des = Integer.toHexString(PCoffset9+address+1);
+		return "ST R"+sr+",x"+des.toUpperCase();
 	}
 
 	@Override

@@ -4,9 +4,10 @@ import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Fill extends BitInstruction{
 
-	public Bit_Fill(char[] bit)
+	public Bit_Fill(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 	}
 	@Override
 	public boolean execute() {

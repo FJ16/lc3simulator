@@ -4,9 +4,10 @@ import nju.edu.lc3.util.BitUtil;
 
 public class Bit_Rti extends BitInstruction{
 	
-	public Bit_Rti(char[] bit)
+	public Bit_Rti(char[] bit,int address)
 	{
 		this.bit = bit;
+		this.address = address;
 	}
 
 	@Override

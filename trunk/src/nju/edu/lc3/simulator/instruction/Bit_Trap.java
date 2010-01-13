@@ -9,10 +9,10 @@ public class Bit_Trap extends BitInstruction{
 	
 	int trapvect8;
 	
-	public Bit_Trap(char[] bit)
+	public Bit_Trap(char[] bit,int address)
 	{
 		this.bit = bit;
-		
+		this.address = address;
 		trapvect8 = BitUtil.bitArrayToInt(bit, 8, 8,true);
 	}
 	@Override
@@ -27,7 +27,7 @@ public class Bit_Trap extends BitInstruction{
 
 	@Override
 	public String getSource() {
-		return "TRAP "+trapvect8;
+		return "TRAP x"+Integer.toHexString(trapvect8);
 	}
 
 	@Override

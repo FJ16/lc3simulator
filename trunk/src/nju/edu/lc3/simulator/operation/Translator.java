@@ -21,7 +21,7 @@ import nju.edu.lc3.util.BitUtil;
 import nju.edu.lc3.word.Bits;
 
 public class Translator {
-	public static BitInstruction decode(int value)
+	public static BitInstruction decode(int value,int address)
 	{
 		char[] bit = null;
 		try {
@@ -34,56 +34,56 @@ public class Translator {
 		switch(op)
 		{
 		case 1:
-			instruction = new Bit_Add(bit);
+			instruction = new Bit_Add(bit,address);
 			break;
 		case 5:
-			instruction = new Bit_And(bit);
+			instruction = new Bit_And(bit,address);
 			break;
 		case 0:
-			instruction = new Bit_Br(bit);
+			instruction = new Bit_Br(bit,address);
 			break;
 		case 12:
-			instruction = new Bit_JmpRet(bit);
+			instruction = new Bit_JmpRet(bit,address);
 			break;
 		case 4:
-			instruction = new Bit_Jsr(bit);
+			instruction = new Bit_Jsr(bit,address);
 			break;
 		case 2:
-			instruction = new Bit_Ld(bit);
+			instruction = new Bit_Ld(bit,address);
 			break;
 		case 10:
-			instruction = new Bit_Ldi(bit);
+			instruction = new Bit_Ldi(bit,address);
 			break;
 		case 6:
-			instruction = new Bit_Ldr(bit);
+			instruction = new Bit_Ldr(bit,address);
 			break;
 		case 14:
-			instruction = new Bit_Lea(bit);
+			instruction = new Bit_Lea(bit,address);
 			break;
 		case 9:
-			instruction = new Bit_Not(bit);
+			instruction = new Bit_Not(bit,address);
 			break;
 		case 8:
-			instruction = new Bit_Rti(bit);
+			instruction = new Bit_Rti(bit,address);
 			break;
 		case 3:
-			instruction = new Bit_St(bit);
+			instruction = new Bit_St(bit,address);
 			break;
 		case 11:
-			instruction = new Bit_Sti(bit);
+			instruction = new Bit_Sti(bit,address);
 			break;
 		case 7:
-			instruction = new Bit_Str(bit);
+			instruction = new Bit_Str(bit,address);
 			break;
 		case 15:
-			instruction = new Bit_Trap(bit);
+			instruction = new Bit_Trap(bit,address);
 			break;
 		default:
-			instruction = new Bit_Fill(bit);
+			instruction = new Bit_Fill(bit,address);
 		}
 		if(instruction.validate()==false)
 		{
-			instruction = new Bit_Fill(bit);
+			instruction = new Bit_Fill(bit,address);
 		}
 			
 		return instruction;
