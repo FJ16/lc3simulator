@@ -10,6 +10,7 @@ import nju.edu.lc3.simulator.model.RegisterModel;
 public class FileManager {
 	private static final FileManager instance = new FileManager();
 	private static final String OS_KERNEL_PATH = "os.txt";
+	public int startAddress;
 
 	public static FileManager getInstance() {
 		return instance;
@@ -68,20 +69,15 @@ public class FileManager {
 	}
 
 	public void loadFile(String filePath) throws IOException {
-		int address = 0;
-		
+				
 		BufferedReader stream;
 		stream = new BufferedReader(new FileReader(filePath));
 		String line = stream.readLine();
+		int address = Integer.parseInt(line,2);
+		this.startAddress = address;
+		line = stream.readLine();
 		while(line!=null)
 		{
-			if(line.indexOf(".orig")>=0)
-			{
-				String temp = line.substring(line.indexOf(".orig")+6);
-				address = Integer.parseInt(temp);
-				line = stream.readLine();
-				continue;
-			}
 			int value = Integer.parseInt(line,2);
 			MemoryModel.getMemory(address).setValue(value);
 			address++;

@@ -27,6 +27,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.PlainDocument;
 
+import nju.edu.lc3.simulator.model.RegisterModel;
 import nju.edu.lc3.simulator.operation.FileManager;
 import nju.edu.lc3.simulator.operation.MachineRun;
 import nju.edu.lc3.simulator.operation.RunProgram;
@@ -46,11 +47,27 @@ public class Simulator extends JFrame {
 	JLabel jumpTo;
 	JComboBox jumpDes;
 	
+	
+	private void reInit()
+	{
+		RegisterModel.getRegister("PC").setValue(12288);
+		
+		try {
+			FileManager.getInstance().loadOS();
+			this.repaint();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
+		rePaintAll();
+		MachineRun.getInstance().gotoPCLine();
+	}
+	
 
 	public Simulator() {
 
 		io = new IOConsole();
-		initialize();
+		
 
 		final JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -60,7 +77,13 @@ public class Simulator extends JFrame {
 		menuBar.add(fileMenu);
 
 		final JMenuItem newItemMenuItem = new JMenuItem();
-		newItemMenuItem.setText("New file");
+		newItemMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent arg0) {
+				
+				reInit();
+			}
+		});
+		newItemMenuItem.setText("Initialization");
 		fileMenu.add(newItemMenuItem);
 
 		final JMenuItem newItemMenuItem_1 = new JMenuItem();
@@ -94,14 +117,9 @@ public class Simulator extends JFrame {
 		final JMenuItem newItemMenuItem_6 = new JMenuItem();
 		newItemMenuItem_6.setText("About");
 		helpMenu.add(newItemMenuItem_6);
+		initialize();
 		
-		try {
-			FileManager.getInstance().loadOS();
-			this.repaint();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(this,e.getMessage());
-		}
+		
 	}
 
 	public void initialize() {
@@ -166,6 +184,13 @@ public class Simulator extends JFrame {
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		try {
+			FileManager.getInstance().loadOS();
+			this.repaint();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage());
+		}
 	}
 	
 	public void rePaintAll()
@@ -206,6 +231,8 @@ public class Simulator extends JFrame {
 					String file= fc.getSelectedFile().getPath();
 					try {
 						FileManager.getInstance().loadFile(file);
+						RegisterModel.getRegister("PC").setValue(FileManager.getInstance().startAddress);
+						MachineRun.getInstance().gotoPCLine();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -216,7 +243,7 @@ public class Simulator extends JFrame {
 					JOptionPane.showMessageDialog(null, "·¢Éú´íÎó£¡","ERROR",JOptionPane.ERROR_MESSAGE);
 				}
 
-			
+				rePaintAll();
 
 			}
 		});
