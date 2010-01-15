@@ -45,13 +45,14 @@ public class MemoryModel {
 	}
 	public void setAddress(int address) {
 		this.address = address;
-		setName();
 	}
+	
 	public int getValue() {
 		return value;
 	}
 	public void setValue(int value) {
 		this.value = value;
+		getIns(true);
 	}
 	public String getOperation() {
 		return operation;
