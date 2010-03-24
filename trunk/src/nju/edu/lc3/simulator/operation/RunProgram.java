@@ -47,7 +47,7 @@ public class RunProgram {
 		BitInstruction ins = MemoryModel.getMemory(pc).getIns(false); //解码
 		MachineRun.getInstance().setMachineMode(ins.isSystemMode); //设置机器模式
 		ins.execute();         //执行代码
-		
+								//检测中断
 	}
 	
 	public void runOneStep()
